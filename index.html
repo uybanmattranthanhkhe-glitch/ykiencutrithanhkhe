@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Ý kiến cử tri — Phường Thanh Khê</title>
+  <meta name="theme-color" content="#0D9488">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+<meta name="apple-mobile-web-app-title" content="Ý KIẾN CỬ TRI">
+  <script src="config.js"></script>
+  <!-- Thêm font-awesome từ CDN nếu chưa có -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --sky-vivid:   #0EA5E9;
+      --sky-bright:  #0D9488;
+      --sky:         #0F766E;
+      --sky-deep:    #065F46;
+      --sky-light:   #5EEAD4;
+      --sky-pale:    #99F6E4;
+      --nav-bg:      #E0F7F4;
+      --nav-active:  #0D9488;
+      --accent:      #2563EB;
+      --accent2:     #F59E0B;
+      --red:         #DC2626;
+      --surface:     #FFFFFF;
+      --bg:          #F0FBFA;
+      --bg2:         #DFF5F0;
+      --text:        #0B1F1C;
+      --text2:       #2F6B63;
+      --border:      #7DD3C0;
+      --border-soft: #C7ECE3;
+      --radius-xl:   20px;
+      --radius-lg:   14px;
+      --radius-md:   10px;
+      --shadow:      0 4px 20px rgba(13,148,136,.13);
+      --shadow-card: 0 2px 12px rgba(13,148,136,.10);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--text);
+      padding-bottom: 72px;
+    }
+
+    /* ========== HEADER ========== */
+    .app-header {
+      background: linear-gradient(135deg, #0EA5E9 0%, #0F766E 60%, #065F46 100%);
+      padding: 12px 16px 12px;
+      position: relative; overflow: hidden;
+    }
+    .app-header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+    }
+    .app-header::after {
+      content: '';
+      position: absolute;
+      bottom: -50px; left: 30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.05);
+    }
+    .header-row { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 8px; position: relative;}
+    .header-icon { width: 90px; height: 90px; object-fit: contain; border-radius: 12px;}
+    .header-title { font-size: 2.3rem;  font-weight: 800; color: #fff;  line-height: 1.35; text-align: center; }
+    .header-sub   { font-size:1rem; color:rgba(255,255,255,.72); font-weight:500; margin-top:2px; }
+
+    /* ========== CARD ========== */
+    .card {
+      background: var(--surface); border-radius: var(--radius-xl);
+      margin: 12px 12px 0; padding: 18px 16px;
+      box-shadow: var(--shadow-card); display: none;
+      min-height: calc(100vh - 155px);
+      border: 1px solid var(--border-soft);
+    }
+    .card.active { display:block; animation: fadeUp .25s ease; }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ========== FORM ========== */
+    .section-title {
+      font-size:.68rem; font-weight:700; text-transform:uppercase;
+      color: var(--sky); margin-bottom:7px; display:flex; align-items:center; gap:5px;
+      letter-spacing: .4px;
+    }
+    .form-group { margin-bottom:16px; }
+    .field-input {
+      width:100%; padding:12px 14px;
+      border:1.5px solid var(--border); border-radius:var(--radius-lg);
+      font-size:.93rem; font-family:inherit; background:#fff;
+      transition: border-color .2s, box-shadow .2s; color: var(--text);
+    }
+    .field-input:focus { outline:none; border-color:var(--sky-vivid); box-shadow:0 0 0 3px rgba(14,165,233,.14); }
+
+    textarea.field-input {
+      min-height: 130px; resize: vertical; line-height: 1.6;
+    }
+
+    /* File upload */
+    .upload-zone {
+      border: 2px dashed var(--border); border-radius: var(--radius-lg);
+      padding: 16px; text-align: center; cursor: pointer;
+      transition: border-color .2s, background .2s; position: relative;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--sky-vivid); background: rgba(14,165,233,.04);
+    }
+    .upload-zone input[type="file"] {
+      position:absolute; inset:0; width:100%; height:100%;
+      opacity:0; cursor:pointer;
+    }
+    .upload-icon { font-size:1.7rem; color: var(--sky-pale); margin-bottom:5px; }
+    .upload-text { font-size:.8rem; color:var(--text2); }
+    .upload-text strong { color:var(--sky); }
+    .file-list { margin-top:10px; display:flex; flex-direction:column; gap:6px; }
+    .file-chip {
+      display:flex; align-items:center; gap:8px;
+      background:var(--bg2); border-radius:30px;
+      padding:6px 12px; font-size:.8rem; color:var(--text);
+    }
+    .file-chip i { color:var(--sky); }
+    .file-chip .remove-file { margin-left:auto; cursor:pointer; color:#bbb; }
+    .file-chip .remove-file:hover { color:var(--red); }
+
+    /* Submit button */
+    .btn-submit {
+      width:100%; padding:14px;
+      background: linear-gradient(135deg, var(--sky-vivid), var(--sky-deep));
+      color:#fff; border:none; border-radius:var(--radius-lg);
+      font-size:.95rem; font-weight:700; font-family:inherit;
+      cursor:pointer; box-shadow:0 4px 16px rgba(14,165,233,.35);
+      margin-top:6px; transition: transform .15s, box-shadow .15s;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    .btn-submit:active { transform:scale(.98); }
+    .btn-submit:disabled { opacity:.65; }
+
+    /* ========== ĐÃ NHẬN TAB ========== */
+    .tab-header {
+      display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;
+    }
+    .tab-header-title { font-size:.95rem; font-weight:700; color:var(--sky-deep); }
+    .refresh-btn {
+      background:var(--bg2); border:none; color:var(--sky); cursor:pointer;
+      font-size:.8rem; font-weight:600; display:flex; align-items:center; gap:4px;
+      padding:6px 12px; border-radius:30px; transition:background .2s;
+    }
+    .refresh-btn:hover { background:var(--sky-pale); }
+
+    .received-item {
+      border: 1.5px solid var(--border-soft); border-radius: var(--radius-lg);
+      padding: 13px; margin-bottom: 10px; cursor: pointer;
+      transition: box-shadow .2s, border-color .2s; position:relative;
+      background: #fff;
+    }
+    .received-item:hover { border-color:var(--sky-vivid); box-shadow:0 4px 14px rgba(14,165,233,.12); }
+    .ri-name  { font-weight:700; font-size:.93rem; color:var(--sky-deep); }
+    .ri-diachi { font-size:.78rem; color:var(--text2); margin-top:3px; }
+    .ri-nd    { font-size:.82rem; color:var(--text); margin-top:6px; line-height:1.5; }
+    .ri-time  { font-size:.71rem; color:#aaa; margin-top:6px; }
+    .badge-received {
+      display:inline-flex; align-items:center; gap:3px;
+      background:linear-gradient(135deg,#DCFCE7,#86EFAC); color:var(--sky-deep);
+      font-size:.66rem; font-weight:700; padding:3px 9px; border-radius:30px;
+      position:absolute; top:12px; right:12px;
+    }
+    .badge-new {
+      display:inline-flex; align-items:center; gap:3px;
+      background:#FFF8E1; color:#8B6300;
+      font-size:.66rem; font-weight:700; padding:3px 9px; border-radius:30px;
+      position:absolute; top:12px; right:12px;
+    }
+
+    /* ========== DANH SÁCH THU GỌN (ĐÃ NHẬN) ========== */
+    .ri-compact {
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; border:1.5px solid var(--border-soft); border-radius:var(--radius-lg);
+      padding:11px 13px; margin-bottom:8px; cursor:pointer;
+      background:#fff; transition: border-color .2s, box-shadow .2s, transform .15s;
+    }
+    .ri-compact:hover  { border-color:var(--sky-vivid); box-shadow:0 4px 14px rgba(14,165,233,.12); }
+    .ri-compact:active { transform:scale(.99); }
+    .ri-compact-info { display:flex; align-items:center; gap:10px; min-width:0; flex:1; }
+    .ri-compact-icon { font-size:1.15rem; flex-shrink:0; }
+    .ri-compact-text { min-width:0; flex:1; }
+    .ri-compact-name {
+      font-weight:700; font-size:.87rem; color:var(--sky-deep);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .ri-compact-sub { font-size:.7rem; color:var(--text2); margin-top:2px; }
+    .ri-compact-chevron { color:var(--sky-pale); font-size:.85rem; flex-shrink:0; }
+    .empty-state {
+      text-align:center; padding:48px 20px; color:var(--text2);
+    }
+    .empty-state i { font-size:2.4rem; margin-bottom:12px; display:block; opacity:.35; }
+
+    /* ========== HƯỚNG DẪN ========== */
+    .guide-step {
+      display:flex; gap:14px; margin-bottom:18px; align-items:flex-start;
+    }
+    .step-num {
+      min-width:32px; height:32px; border-radius:50%;
+      background: linear-gradient(135deg, var(--sky-vivid), var(--sky-deep));
+      color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:800; font-size:.85rem; flex-shrink:0;
+      box-shadow: 0 3px 10px rgba(14,165,233,.3);
+    }
+    .step-body h4 { font-size:.88rem; font-weight:700; color:var(--sky-deep); margin-bottom:3px; }
+    .step-body p  { font-size:.81rem; color:var(--text2); line-height:1.55; }
+    .guide-note {
+      background: linear-gradient(135deg,#FFF8E1,#FFF3C4);
+      border-left:4px solid var(--accent2); border-radius:10px;
+      padding:12px 14px; font-size:.81rem; color:#6B4F00; margin-top:8px;
+    }
+
+    /* ========== BOTTOM NAV - GIỐNG ADMIN ========== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--nav-bg);
+      border-top: 1.5px solid var(--sky-pale);
+      display: flex;
+      z-index: 1000;
+      box-shadow: 0 -4px 20px rgba(13, 148, 136, .13);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 9px 2px 7px;
+      cursor: pointer;
+      font-size: .56rem;
+      font-weight: 700;
+      color: #4E9A90;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      transition: color .2s;
+    }
+    .nav-item i {
+      font-size: 1.1rem;
+      margin-bottom: 3px;
+      transition: transform .2s;
+    }
+    .nav-item.active {
+      color: var(--nav-active);
+    }
+    .nav-item.active i {
+      transform: translateY(-2px);
+      color: var(--sky-vivid);
+    }
+
+    /* Badge cho nav item - giống admin */
+    .nav-badge {
+      position: absolute;
+      top: 2px;
+      right: 50%;
+      transform: translateX(calc(50% + 20px));
+      background: #DC2626;
+      color: #fff;
+      font-size: .55rem;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 20px;
+      min-width: 18px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.35);
+      border: 2px solid #fff;
+      line-height: 1.4;
+    }
+
+    /* ========== TOAST ========== */
+    #toast {
+      position:fixed; bottom:82px; left:50%; transform:translateX(-50%) translateY(20px);
+      background:#0F2E2A; color:#fff; padding:11px 20px; border-radius:30px;
+      font-size:.84rem; font-weight:600; opacity:0; transition:.3s;
+      z-index:900; white-space:nowrap; pointer-events:none; max-width:90%;
+    }
+    #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+    #toast.error { background: var(--red); }
+
+    /* ========== LOADING ========== */
+    .loading-state {
+      text-align:center; padding:40px 20px; color:var(--text2); font-size:.9rem;
+    }
+    .loading-state i { margin-right:6px; color: var(--sky-vivid); }
+
+    /* ========== MODAL: CHI TIẾT ========== */
+    .modal-overlay {
+      position:fixed; inset:0; background:rgba(13,31,60,.55);
+      z-index:1200; display:none; align-items:center; justify-content:center;
+      padding:20px;
+    }
+    .modal-overlay.show { display:flex; }
+    .modal-sheet {
+      background:#fff; border-radius:var(--radius-xl);
+      width:100%; max-width:440px; max-height:85vh; overflow-y:auto;
+      padding:0 20px 22px; animation:popIn .22s ease;
+      box-shadow:0 20px 60px rgba(0,0,0,.35);
+      position:relative;
+    }
+    @keyframes popIn { from{transform:scale(.93);opacity:0} to{transform:scale(1);opacity:1} }
+    .modal-header {
+      display:flex; justify-content:space-between; align-items:center;
+      position:sticky; top:0; background:#fff; z-index:2;
+      padding:18px 0 12px; margin-bottom:10px;
+      border-bottom:1px solid var(--border-soft);
+    }
+    .modal-title { font-size:1rem; font-weight:800; color:var(--sky-deep); }
+    
+    /* ===== NÚT ĐÓNG MODAL - CẢI TIẾN RÕ RÀNG HƠN ===== */
+    .modal-close {
+      background: #DC2626;
+      border: 2px solid #B91C1C;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(220, 38, 38, 0.5);
+      transition: transform .15s, background .2s;
+      font-size: 1.4rem;
+      font-weight: 800;
+      line-height: 1;
+      padding: 0;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    .modal-close:hover { 
+      background: #B91C1C; 
+      transform: scale(1.08); 
+    }
+    .modal-close:active { 
+      transform: scale(.92); 
+    }
+    /* Đảm bảo chữ X luôn hiển thị ngay cả khi font-awesome lỗi */
+    .modal-close .close-text {
+      display: inline-block;
+      font-family: 'Be Vietnam Pro', sans-serif;
+    }
+    .modal-close .fa-times {
+      display: none; /* Ẩn icon font-awesome, chỉ dùng chữ X */
+    }
+    
+    .detail-row { margin-bottom:12px; }
+    .detail-lbl { font-size:.66rem; font-weight:700; text-transform:uppercase; color:var(--sky); margin-bottom:3px; letter-spacing:.4px; }
+    .detail-val { font-size:.88rem; color:var(--text); line-height:1.6; white-space:pre-wrap; }
+
+    .reply-badge {
+      display:inline-block; font-size:.66rem; font-weight:700; padding:3px 9px;
+      border-radius:30px; margin-bottom:6px;
+    }
+    .reply-badge.reply   { background:linear-gradient(135deg,#DCFCE7,#86EFAC); color:var(--sky-deep); }
+    .reply-badge.forward { background:#FFF3E0; color:#E65100; }
+
+    /* ========== PROGRESS BAR ========== */
+    .upload-progress {
+      margin-top: 10px;
+      height: 4px;
+      background: var(--border-soft);
+      border-radius: 2px;
+      overflow: hidden;
+      display: none;
+    }
+    .upload-progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--sky-vivid), var(--sky-light));
+      transition: width .3s;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="app-header">
+  <div class="header-row">
+    <img src="icon.png" class="header-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.8em%22 font-size=%2290%22%3E🏛️%3C/text%3E%3C/svg%3E'" alt="logo">
+    <div>
+      <div class="header-title">Ý KIẾN CỬ TRI</div>
+      <div class="header-sub">Ủy ban mặt trận tổ quốc Việt Nam <br> Phường Thanh Khê</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB: TẠO PHẢN ÁNH ===== -->
+<div class="card active" id="tabTao">
+
+  <div class="form-group">
+    <div class="section-title"><i class="fas fa-user"></i> Họ và tên</div>
+    <input type="text" id="hoTen" class="field-input" placeholder="Nhập họ và tên đầy đủ">
+  </div>
+
+  <div class="form-group">
+    <div class="section-title"><i class="fas fa-phone"></i> Địa chỉ hoặc số điện thoại <span style="font-weight:500;color:var(--text2);font-size:.85em;text-transform:none;letter-spacing:0">(tuỳ chọn)</span></div>
+    <input type="text" id="diaChi" class="field-input" placeholder="Nhập địa chỉ hoặc số điện thoại liên hệ">
+  </div>
+
+  <div class="form-group">
+    <div class="section-title"><i class="fas fa-comment-dots"></i> Nội dung ý kiến <span style="font-weight:500;color:var(--text2);font-size:.85em;text-transform:none;letter-spacing:0">(tuỳ chọn)</span></div>
+    <textarea id="noiDung" class="field-input" placeholder="Mô tả chi tiết vấn đề… (có thể để trống nếu đã đính kèm tệp)"></textarea>
+    <div style="margin-top:5px;font-size:.75rem;color:var(--text2)"><i class="fas fa-info-circle" style="color:var(--sky-vivid)"></i> Có thể gửi tệp đính kèm thay vì nhập nội dung</div>
+  </div>
+
+  <div class="form-group">
+    <div class="section-title"><i class="fas fa-paperclip"></i> Tệp đính kèm (tuỳ chọn)</div>
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" multiple accept="image/*,.pdf,.doc,.docx,.txt">
+      <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+      <div class="upload-text">
+        <strong>Chọn ảnh hoặc tệp văn bản</strong><br>
+        Hỗ trợ: JPG, PNG, PDF, DOC, TXT
+      </div>
+    </div>
+    <div class="upload-progress" id="uploadProgress">
+      <div class="upload-progress-bar" id="uploadProgressBar"></div>
+    </div>
+    <div class="file-list" id="fileList"></div>
+  </div>
+
+  <button class="btn-submit" id="btnGui">
+    <i class="fas fa-paper-plane"></i> Gửi ý kiến
+  </button>
+</div>
+
+<!-- ===== TAB: Ý KIẾN MỚI (công khai — mọi người đều xem được) ===== -->
+<div class="card" id="tabMoi">
+  <div class="tab-header">
+    <span class="tab-header-title">📋 Ý kiến chờ xử lý (công khai)</span>
+    <button class="refresh-btn" id="btnRefreshMoi"><i class="fas fa-sync-alt"></i> Làm mới</button>
+  </div>
+  <div id="listMoi">
+    <div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>
+  </div>
+</div>
+
+<!-- ===== TAB: ĐÃ NHẬN ===== -->
+<div class="card" id="tabDaNhan">
+  <div class="tab-header">
+    <span class="tab-header-title">✅ Đã được tiếp nhận</span>
+    <button class="refresh-btn" id="btnRefreshDN"><i class="fas fa-sync-alt"></i> Làm mới</button>
+  </div>
+  <div id="listDaNhan">
+    <div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>
+  </div>
+</div>
+
+<!-- ===== TAB: HƯỚNG DẪN ===== -->
+<div class="card" id="tabHuongDan">
+  <div class="tab-header">
+    <span class="tab-header-title">📖 Hướng dẫn sử dụng</span>
+  </div>
+
+  <div class="guide-step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h4>Nhập thông tin cá nhân</h4>
+      <p>Điền đầy đủ họ và tên của cử tri gửi ý kiến. Có thể thêm địa chỉ hoặc số điện thoại để tiện liên hệ.</p>
+    </div>
+  </div>
+  <div class="guide-step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h4>Mô tả nội dung ý kiến</h4>
+      <p>Viết rõ ràng nội dung ý kiến, kiến nghị: tình trạng, địa điểm, thời gian xảy ra (nếu có).</p>
+    </div>
+  </div>
+  <div class="guide-step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h4>Đính kèm ảnh hoặc tệp (tuỳ chọn)</h4>
+      <p>Có thể tải lên hình ảnh minh chứng hoặc tệp văn bản liên quan.</p>
+    </div>
+  </div>
+  <div class="guide-step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h4>Nhấn Gửi ý kiến</h4>
+      <p>Hệ thống sẽ lưu thông tin vào Drive và gộp chung vào một tệp tài liệu (Word). Tổ dân phố sẽ xem xét và phản hồi sớm nhất.</p>
+    </div>
+  </div>
+  <div class="guide-step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h4>Theo dõi trạng thái</h4>
+      <p>Chuyển sang tab <strong>Đã nhận</strong> để kiểm tra xem ý kiến đã được tiếp nhận chưa.</p>
+    </div>
+  </div>
+
+  <div class="guide-note">
+    💡 <strong>Lưu ý:</strong> Mỗi ý kiến cùng các tệp đính kèm sẽ được gộp chung vào một tệp tài liệu duy nhất, lưu trữ an toàn trên Google Drive để dễ tra cứu.
+  </div>
+</div>
+
+<!-- ===== BOTTOM NAV - GIỐNG ADMIN ===== -->
+<nav class="bottom-nav">
+  <div class="nav-item active" data-tab="tao">
+    <i class="fas fa-plus-circle"></i>
+    Tạo ý kiến
+  </div>
+  <div class="nav-item" data-tab="moi" style="position:relative;">
+    <i class="fas fa-list-ul"></i>
+    Ý kiến mới
+    <span class="nav-badge" id="badgeMoi">0</span>
+  </div>
+  <div class="nav-item" data-tab="danhan" style="position:relative;">
+    <i class="fas fa-check-circle"></i>
+    Đã nhận
+    <span class="nav-badge" id="badgeDaNhan">0</span>
+  </div>
+  <div class="nav-item" data-tab="huongdan">
+    <i class="fas fa-circle-info"></i>
+    Hướng dẫn
+  </div>
+  <div class="nav-item" data-tab="admin">
+    <i class="fas fa-user-shield"></i>
+    Quản trị
+  </div>
+</nav>
+
+<!-- ===== MODAL CHI TIẾT ===== -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <div class="modal-title">Chi tiết ý kiến</div>
+      <button class="modal-close" id="detailModalClose">
+        <span class="close-text">✕</span>
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="detail-row" id="dStatusRow" style="margin-bottom:10px"></div>
+    <div class="detail-row"><div class="detail-lbl">Họ và tên</div><div class="detail-val" id="dHoTen"></div></div>
+    <div class="detail-row"><div class="detail-lbl">Địa chỉ / SĐT</div><div class="detail-val" id="dDiaChi"></div></div>
+    <div class="detail-row"><div class="detail-lbl">Thời gian gửi</div><div class="detail-val" id="dTime"></div></div>
+    <div class="detail-row"><div class="detail-lbl">Nội dung ý kiến</div><div class="detail-val" id="dNoiDung"></div></div>
+    <div class="detail-row" id="dAttachRow" style="display:none">
+      <div class="detail-lbl">Tệp đính kèm</div>
+      <div class="detail-val" id="dAttach"></div>
+    </div>
+    <div class="detail-row" id="dReplyRow" style="display:none">
+      <div class="detail-lbl">Phản hồi từ Ban quản trị</div>
+      <span class="reply-badge" id="dReplyBadge"></span>
+      <div class="detail-val" id="dReplyContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div id="toast"></div>
+
+<script>
+// ============================================================
+//  HELPERS
+// ============================================================
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show' + (isError ? ' error' : '');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.className = '', 3000);
+}
+function escHtml(s) {
+  if (s === null || s === undefined || s === '') return '';
+  return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+function fmtDate(ts) {
+  try { return new Date(ts).toLocaleString('vi-VN'); } catch { return ts || ''; }
+}
+
+// ============================================================
+//  MODAL CHI TIẾT
+// ============================================================
+function openDetailModal(item) {
+  const time = item.timestamp || item.ts;
+  document.getElementById('dHoTen').textContent  = item.hoTen || '';
+  document.getElementById('dDiaChi').textContent = item.diaChi || '(Không có)';
+  document.getElementById('dTime').textContent    = fmtDate(time);
+  document.getElementById('dNoiDung').textContent = item.noiDung || '(Không có nội dung)';
+
+  const statusRow = document.getElementById('dStatusRow');
+  const isReceived = item.status === 'received';
+  statusRow.innerHTML = isReceived
+    ? `<span class="badge-received" style="position:static;display:inline-flex">${item.loaiXuLy === 'forward' ? '📤 Đã chuyển' : '✅ Đã trả lời'}</span>`
+    : `<span class="badge-new" style="position:static;display:inline-flex">🕐 Chờ tiếp nhận</span>`;
+
+  const attachRow = document.getElementById('dAttachRow');
+  if (item.attachUrl) {
+    attachRow.style.display = 'block';
+    document.getElementById('dAttach').innerHTML = String(item.attachUrl).split('\n')
+      .map(u => `<a href="${escHtml(u)}" target="_blank" style="color:var(--sky);display:block;margin-bottom:4px;font-size:.82rem">${escHtml(u)}</a>`).join('');
+  } else {
+    attachRow.style.display = 'none';
+  }
+
+  const replyRow = document.getElementById('dReplyRow');
+  if (isReceived && item.phanHoi) {
+    replyRow.style.display = 'block';
+    const isForward = item.loaiXuLy === 'forward';
+    const badge = document.getElementById('dReplyBadge');
+    badge.textContent = isForward ? '📤 Đã chuyển cơ quan chức năng' : '✅ Đã trả lời';
+    badge.className = 'reply-badge ' + (isForward ? 'forward' : 'reply');
+    document.getElementById('dReplyContent').textContent = item.phanHoi;
+  } else {
+    replyRow.style.display = 'none';
+  }
+
+  document.getElementById('detailModal').classList.add('show');
+}
+document.getElementById('detailModalClose').addEventListener('click', () => {
+  document.getElementById('detailModal').classList.remove('show');
+});
+document.getElementById('detailModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('detailModal'))
+    document.getElementById('detailModal').classList.remove('show');
+});
+
+// ============================================================
+//  BOTTOM NAV
+// ============================================================
+const tabs = {
+  tao:      document.getElementById('tabTao'),
+  moi:      document.getElementById('tabMoi'),
+  danhan:   document.getElementById('tabDaNhan'),
+  huongdan: document.getElementById('tabHuongDan'),
+};
+
+function switchTab(id) {
+  if (id === 'admin') { window.location.href = (typeof ADMIN_URL !== 'undefined') ? ADMIN_URL : 'admin.html'; return; }
+  Object.values(tabs).forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (tabs[id]) tabs[id].classList.add('active');
+  document.querySelector(`.nav-item[data-tab="${id}"]`)?.classList.add('active');
+  if (id === 'moi')    loadMoi();
+  if (id === 'danhan') loadDaNhan();
+}
+
+document.querySelectorAll('.nav-item').forEach(n => {
+  n.addEventListener('click', () => switchTab(n.dataset.tab));
+});
+
+// ============================================================
+//  FILE UPLOAD
+// ============================================================
+let selectedFiles = [];
+const fileInput = document.getElementById('fileInput');
+const fileList  = document.getElementById('fileList');
+const uploadZone = document.getElementById('uploadZone');
+const uploadProgress = document.getElementById('uploadProgress');
+const uploadProgressBar = document.getElementById('uploadProgressBar');
+
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault(); uploadZone.classList.remove('dragover');
+  addFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+
+function addFiles(files) {
+  [...files].forEach(f => { 
+    if (!selectedFiles.find(x => x.name === f.name && x.size === f.size)) 
+      selectedFiles.push(f); 
+  });
+  renderFileList();
+}
+function renderFileList() {
+  fileList.innerHTML = selectedFiles.map((f, i) => `
+    <div class="file-chip">
+      <i class="fas fa-${f.type.startsWith('image') ? 'image' : 'file-alt'}"></i>
+      <span>${escHtml(f.name)} (${(f.size/1024).toFixed(1)} KB)</span>
+      <span class="remove-file" data-idx="${i}"><i class="fas fa-times"></i></span>
+    </div>
+  `).join('');
+  fileList.querySelectorAll('.remove-file').forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedFiles.splice(+btn.dataset.idx, 1);
+      renderFileList();
+    });
+  });
+}
+
+function showProgress(show) {
+  uploadProgress.style.display = show ? 'block' : 'none';
+  uploadProgressBar.style.width = '0%';
+}
+
+function updateProgress(percent) {
+  uploadProgressBar.style.width = percent + '%';
+}
+
+// ============================================================
+//  GỬI PHẢN ÁNH
+// ============================================================
+async function fileToBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => {
+      const base64 = r.result.split(',')[1];
+      res(base64);
+    };
+    r.onerror = () => rej(new Error('Đọc file thất bại'));
+    r.readAsDataURL(file);
+  });
+}
+
+async function uploadSingleFile(file, id, index, total) {
+  try {
+    const b64 = await fileToBase64(file);
+    updateProgress((index / total) * 100);
+    
+    const response = await fetch(WEBAPP_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'uploadFile',
+        id: id,
+        fileName: file.name,
+        mimeType: file.type,
+        base64Data: b64
+      })
+    });
+    const result = await response.json();
+    if (!result.success) {
+      throw new Error(result.error || 'Upload thất bại');
+    }
+    return result;
+  } catch (err) {
+    console.error('Upload error:', err);
+    throw err;
+  }
+}
+
+document.getElementById('btnGui').addEventListener('click', async () => {
+  const hoTen   = document.getElementById('hoTen').value.trim();
+  const diaChi  = document.getElementById('diaChi').value.trim();
+  const noiDung  = document.getElementById('noiDung').value.trim();
+
+  if (!hoTen)    { showToast('⚠ Vui lòng nhập họ và tên', true); return; }
+  if (!noiDung && selectedFiles.length === 0) { showToast('⚠ Vui lòng nhập nội dung hoặc đính kèm tệp', true); return; }
+
+  const btn = document.getElementById('btnGui');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi…';
+  showProgress(true);
+
+  try {
+    const payload = {
+      action: 'add', 
+      hoTen, 
+      diaChi,
+      noiDung,
+      timestamp: new Date().toISOString()
+    };
+    
+    const res = await fetch(WEBAPP_URL, { 
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      const history = JSON.parse(localStorage.getItem('phanh_sent') || '[]');
+      history.unshift({ 
+        id: json.id, 
+        hoTen, 
+        diaChi,
+        noiDung, 
+        ts: payload.timestamp, 
+        status: 'new' 
+      });
+      localStorage.setItem('phanh_sent', JSON.stringify(history.slice(0, 50)));
+
+      if (selectedFiles.length > 0 && json.id) {
+        for (let i = 0; i < selectedFiles.length; i++) {
+          try {
+            await uploadSingleFile(selectedFiles[i], json.id, i + 1, selectedFiles.length);
+            showToast(`Đã upload ${i+1}/${selectedFiles.length}: ${selectedFiles[i].name}`);
+          } catch(fe) { 
+            console.warn('Upload file error:', fe);
+            showToast(`Cảnh báo: Không upload được ${selectedFiles[i].name}`, true);
+          }
+        }
+        updateProgress(100);
+        setTimeout(() => showProgress(false), 1000);
+      }
+
+      showToast('✅ Gửi ý kiến thành công!');
+      document.getElementById('hoTen').value = '';
+      document.getElementById('diaChi').value = '';
+      document.getElementById('noiDung').value = '';
+      selectedFiles = []; 
+      renderFileList();
+    } else {
+      showToast('❌ ' + (json.error || 'Lỗi không xác định'), true);
+      showProgress(false);
+    }
+  } catch(err) {
+    showToast('❌ Lỗi kết nối: ' + err.message, true);
+    showProgress(false);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi ý kiến';
+  }
+});
+
+// ============================================================
+//  SYNC: Cập nhật status từ server vào localStorage
+// ============================================================
+async function syncFromServer() {
+  const res  = await fetch(WEBAPP_URL + '?action=get&t=' + Date.now());
+  const json = await res.json();
+  if (!json.success || !json.data) return null;
+
+  const serverData = json.data;
+
+  const serverIdSet = new Set(serverData.map(s => s.id));
+  let history = JSON.parse(localStorage.getItem('phanh_sent') || '[]');
+  const nowTs = Date.now();
+  const newHistory = history
+    .filter(item => {
+      if (serverIdSet.has(item.id)) return true;
+      const age = nowTs - new Date(item.ts).getTime();
+      return age >= 0 && age < 2 * 60 * 1000;
+    })
+    .map(item => {
+      const serverItem = serverData.find(s => s.id === item.id);
+      return serverItem ? { ...item, status: serverItem.status } : item;
+    });
+  localStorage.setItem('phanh_sent', JSON.stringify(newHistory));
+
+  // Cập nhật badge
+  const newCount = serverData.filter(r => r.status === 'new').length;
+  const receivedCount = serverData.filter(r => r.status === 'received').length;
+  const badgeMoi = document.getElementById('badgeMoi');
+  const badgeDaNhan = document.getElementById('badgeDaNhan');
+  if (badgeMoi) {
+    badgeMoi.textContent = newCount;
+    badgeMoi.style.display = newCount > 0 ? 'block' : 'none';
+  }
+  if (badgeDaNhan) {
+    badgeDaNhan.textContent = receivedCount;
+    badgeDaNhan.style.display = receivedCount > 0 ? 'block' : 'none';
+  }
+
+  return serverData;
+}
+
+// ============================================================
+//  TAB: Ý KIẾN MỚI
+// ============================================================
+async function loadMoi() {
+  const box = document.getElementById('listMoi');
+  box.innerHTML = `<div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>`;
+
+  const localHistory = JSON.parse(localStorage.getItem('phanh_sent') || '[]');
+
+  try {
+    const serverData = await syncFromServer();
+    if (!serverData) throw new Error('Không có dữ liệu server');
+
+    // Chỉ hiển thị các ý kiến CHƯA được trả lời/xử lý ở tab này.
+    // Ý kiến đã được admin trả lời sẽ tự động chuyển sang tab "Đã nhận".
+    const myItems = serverData
+      .filter(s => s.status !== 'received')
+      .map(s => ({
+        id:        s.id,
+        hoTen:     s.hoTen,
+        diaChi:    s.diaChi || '',
+        noiDung:   s.noiDung,
+        ts:        s.timestamp,
+        status:    s.status,
+        attachUrl: s.attachUrl || ''
+      }));
+
+    const serverIds = new Set(myItems.map(i => i.id));
+    const now = Date.now();
+    const stillPending = localHistory.filter(item => {
+      if (serverIds.has(item.id)) return false;
+      const age = now - new Date(item.ts).getTime();
+      return age >= 0 && age < 2 * 60 * 1000;
+    });
+    localStorage.setItem('phanh_sent', JSON.stringify(stillPending));
+
+    stillPending.forEach(item => myItems.push(item));
+    myItems.sort((a, b) => new Date(b.ts) - new Date(a.ts));
+
+    renderMoiList(myItems);
+  } catch(err) {
+    console.error('loadMoi error:', err);
+    if (localHistory.length) {
+      renderMoiList(localHistory);
+      showToast('Không thể kết nối server, hiển thị dữ liệu tạm trên máy này', true);
+    } else {
+      box.innerHTML = `<div class="empty-state" style="color:var(--red)"><i class="fas fa-exclamation-triangle"></i>Không thể tải danh sách, vui lòng thử lại<br><small style="opacity:.7">${escHtml(err.message||'')}</small></div>`;
+    }
+  }
+}
+
+let curMoiItems = [];
+function renderMoiList(items) {
+  curMoiItems = items;
+  const box = document.getElementById('listMoi');
+  if (!items.length) {
+    box.innerHTML = `<div class="empty-state"><i class="fas fa-circle-check"></i>Không có ý kiến nào đang chờ xử lý</div>`;
+    return;
+  }
+  box.innerHTML = items.map((item, idx) => `
+    <div class="received-item" style="padding-bottom:16px" data-idx="${idx}" data-id="${escHtml(item.id||'')}">
+      <span class="badge-new">🕐 Chờ tiếp nhận</span>
+      <div class="ri-name">${escHtml(item.hoTen)}</div>
+      ${item.diaChi ? `<div class="ri-diachi"><i class="fas fa-map-pin"></i> ${escHtml(item.diaChi)}</div>` : ''}
+      <div class="ri-nd">${escHtml((item.noiDung||'').substring(0, 120))}${(item.noiDung||'').length > 120 ? '…' : ''}</div>
+      <div class="ri-time"><i class="fas fa-clock"></i> ${fmtDate(item.ts)}</div>
+    </div>`
+  ).join('');
+
+  box.querySelectorAll('.received-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const item = curMoiItems[+el.dataset.idx];
+      if (item) openDetailModal(item);
+    });
+  });
+}
+
+document.getElementById('btnRefreshMoi').addEventListener('click', async () => {
+  const btn = document.getElementById('btnRefreshMoi');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang tải…';
+  try {
+    await loadMoi();
+  } catch(e) {
+    showToast('❌ Lỗi làm mới: ' + e.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-sync-alt"></i> Làm mới';
+  }
+});
+
+// ============================================================
+//  TAB: ĐÃ NHẬN
+// ============================================================
+async function loadDaNhan() {
+  const box = document.getElementById('listDaNhan');
+  box.innerHTML = `<div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>`;
+  try {
+    const serverData = await syncFromServer();
+    if (!serverData) {
+      box.innerHTML = `<div class="empty-state"><i class="fas fa-check-circle"></i>Chưa có ý kiến nào được tiếp nhận</div>`;
+      return;
+    }
+    const received = serverData.filter(r => r.status === 'received');
+    if (!received.length) {
+      box.innerHTML = `<div class="empty-state"><i class="fas fa-clock"></i>Chưa có ý kiến nào được tiếp nhận</div>`;
+      return;
+    }
+    box.innerHTML = received.map((item, idx) => {
+      const isForward = item.loaiXuLy === 'forward';
+      return `
+      <div class="ri-compact" data-idx="${idx}">
+        <div class="ri-compact-info">
+          <span class="ri-compact-icon">${isForward ? '📤' : '✅'}</span>
+          <div class="ri-compact-text">
+            <div class="ri-compact-name">${escHtml(item.hoTen)}</div>
+            <div class="ri-compact-sub">${isForward ? 'Đã chuyển' : 'Đã trả lời'} · ${fmtDate(item.timestamp)}</div>
+          </div>
+        </div>
+        <i class="fas fa-chevron-right ri-compact-chevron"></i>
+      </div>`;
+    }).join('');
+
+    box.querySelectorAll('.ri-compact').forEach(el => {
+      el.addEventListener('click', () => {
+        const item = received[+el.dataset.idx];
+        if (item) openDetailModal(item);
+      });
+    });
+  } catch(err) {
+    box.innerHTML = `<div class="empty-state" style="color:var(--red)"><i class="fas fa-exclamation-triangle"></i>Lỗi tải dữ liệu</div>`;
+  }
+}
+document.getElementById('btnRefreshDN').addEventListener('click', loadDaNhan);
+
+// ============================================================
+//  KHỞI ĐỘNG
+// ============================================================
+loadDaNhan();
+// Lấy badge lần đầu
+setTimeout(syncFromServer, 1000);
+</script>
+</body>
+</html>
