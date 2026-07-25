@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Quản trị — Ý kiến cử tri phường Thanh Khê</title>
+  <meta name="theme-color" content="#0EA5E9">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="icon.png" type="image/png">
+  <script src="config.js"></script>
+  <style>
+    :root {
+      --sky-vivid:   #0EA5E9;
+      --sky-bright:  #0D9488;
+      --sky:         #0F766E;
+      --sky-deep:    #065F46;
+      --sky-light:   #5EEAD4;
+      --sky-pale:    #99F6E4;
+      --nav-bg:      #E0F7F4;
+      --nav-active:  #0D9488;
+      --accent:      #F59E0B;
+      --red:         #DC2626;
+      --red-light:   #FFEEEE;
+      --surface:     #FFFFFF;
+      --bg:          #F0FBFA;
+      --bg2:         #DFF5F0;
+      --text:        #0B1F1C;
+      --text2:       #2F6B63;
+      --border:      #7DD3C0;
+      --border-soft: #C7ECE3;
+      --radius-xl:   20px;
+      --radius-lg:   14px;
+      --radius-md:   10px;
+      --radius-sm:   8px;
+      --shadow:      0 4px 20px rgba(13,148,136,.13);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--text);
+    }
+
+    /* ========== LOGIN ========== */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      background: linear-gradient(145deg, #0EA5E9 0%, #0F766E 45%, #065F46 100%);
+      position: relative; overflow: hidden;
+    }
+    #loginScreen::before {
+      content: ''; position: absolute;
+      top: -80px; right: -60px;
+      width: 280px; height: 280px;
+      border-radius: 50%; background: rgba(255,255,255,.07);
+    }
+    #loginScreen::after {
+      content: ''; position: absolute;
+      bottom: -50px; left: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%; background: rgba(255,255,255,.05);
+    }
+    .login-card {
+      background: #fff; border-radius: var(--radius-xl);
+      padding: 30px 22px; width: 100%; max-width: 380px;
+      box-shadow: 0 12px 48px rgba(0,0,0,.18); text-align: center;
+      position: relative; z-index: 1;
+    }
+    .login-logo { width: 68px; height: 68px; margin: 0 auto 10px;
+    display:flex; align-items:center; justify-content:center;
+    }
+    .login-logo img { width: 90px; height: 90px; object-fit: contain; }
+    .login-title { font-size: 1.3rem; font-weight: 800; color: var(--sky-deep); margin-bottom: 3px; }
+    .login-sub   { font-size: .78rem; color: var(--text2); margin-bottom: 26px; }
+    .pw-wrap { position: relative; margin-bottom: 14px; }
+    .pw-wrap input {
+      width: 100%; padding: 12px 44px 12px 16px;
+      border: 1.5px solid var(--border); border-radius: var(--radius-lg);
+      font-size: .93rem; font-family: inherit; color: var(--text);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .pw-wrap input:focus { outline:none; border-color:var(--sky-vivid); box-shadow:0 0 0 3px rgba(14,165,233,.14); }
+    .pw-eye {
+      position:absolute; right:14px; top:50%; transform:translateY(-50%);
+      cursor:pointer; color:var(--text2); font-size:1rem;
+    }
+    .btn-login {
+      width:100%; padding:13px;
+      background: linear-gradient(135deg, var(--sky-vivid), var(--sky-deep));
+      color:#fff; border:none; border-radius:var(--radius-lg);
+      font-size:.93rem; font-weight:700; font-family:inherit;
+      cursor:pointer; box-shadow:0 4px 16px rgba(14,165,233,.35);
+      transition: transform .15s;
+    }
+    .btn-login:active { transform:scale(.98); }
+    .login-error { color:var(--red); font-size:.81rem; font-weight:600; margin-top:10px; display:none; }
+    .back-link {
+      display:inline-flex; align-items:center; gap:5px;
+      color:var(--text2); font-size:.79rem; font-weight:600;
+      cursor:pointer; margin-top:14px; padding:6px 12px;
+      border-radius:30px; transition:background .2s;
+    }
+    .back-link:hover { background:var(--bg2); color:var(--sky); }
+
+    /* ========== ADMIN PANEL ========== */
+    #adminPanel { display:none; padding-bottom:72px; }
+    #adminPanel.show { display:block; }
+
+    /* ========== HEADER ========== */
+    .app-header {
+      background: linear-gradient(135deg, #0EA5E9 0%, #0F766E 55%, #065F46 100%);
+      padding: 12px 16px 12px; position:relative; overflow:hidden;
+    }
+    .app-header::before {
+      content:''; position:absolute; top:-60px; right:-40px;
+      width:180px; height:180px; border-radius:50%;
+      background:rgba(255,255,255,.08);
+    }
+    .header-row { display:flex; align-items:center; justify-content:space-between; position:relative; }
+    .header-left { display:flex; align-items:center; gap:10px; }
+    .header-icon  { width: 38px; height: 38px; object-fit: contain; border-radius: 10px; }
+    .header-title { font-size:1.1rem; font-weight:800; color:#fff; }
+    .header-sub   { font-size:.68rem; color:rgba(255,255,255,.72); margin-top:1px; }
+    .btn-logout {
+      background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28);
+      color:#fff; padding:7px 13px; border-radius:30px;
+      font-size:.74rem; font-weight:600; font-family:inherit; cursor:pointer;
+      transition: background .2s;
+    }
+    .btn-logout:hover { background:rgba(255,255,255,.26); }
+    .stats-row {
+      display:flex; gap:8px; margin-top:10px; position:relative;
+    }
+    .stat-chip {
+      flex:1; background:rgba(255,255,255,.15); border-radius:12px;
+      padding:8px 10px; text-align:center;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .stat-num  { font-size:1.35rem; font-weight:800; color:#fff; line-height:1; }
+    .stat-lbl  { font-size:.62rem; color:rgba(255,255,255,.75); font-weight:600; margin-top:2px; }
+
+    /* ========== CONTENT ========== */
+    .content-area { padding: 12px; }
+
+    /* filter tabs */
+    .filter-tabs {
+      display:flex; gap:6px; margin-bottom:12px; overflow-x:auto;
+      scrollbar-width:none; flex-wrap:wrap;
+    }
+    .filter-tabs::-webkit-scrollbar { display:none; }
+    .ftab {
+      flex-shrink:0; padding:7px 14px; border-radius:30px;
+      font-size:.76rem; font-weight:700; cursor:pointer;
+      background:#fff; border:1.5px solid var(--border);
+      color:var(--text2); transition: all .2s;
+    }
+    .ftab.active { background:var(--sky-vivid); border-color:var(--sky-vivid); color:#fff; box-shadow:0 3px 12px rgba(14,165,233,.3); }
+
+    /* ========== ADMIN CONTROLS ========== */
+    .admin-controls {
+      display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; align-items:center;
+    }
+    .admin-controls .search-box {
+      display:flex; align-items:center; background:#fff; border-radius:30px;
+      padding:0 12px; border:1.5px solid var(--border-soft); transition:border-color .2s;
+      flex:1; min-width:120px;
+    }
+    .admin-controls .search-box:focus-within { border-color:var(--sky-vivid); }
+    .admin-controls .search-box input {
+      border:none; background:transparent; padding:8px 8px;
+      font-size:.8rem; font-family:inherit; color:var(--text);
+      outline:none; width:100%;
+    }
+    .admin-controls .search-box i { color:var(--text2); font-size:.75rem; }
+    .admin-controls .sort-select {
+      background:#fff; border:1.5px solid var(--border-soft); border-radius:30px;
+      padding:6px 10px; font-size:.75rem; font-family:inherit; color:var(--text);
+      cursor:pointer; outline:none; min-width:100px;
+    }
+    .admin-controls .sort-select:focus { border-color:var(--sky-vivid); }
+
+    /* ========== LIST ITEM ========== */
+    .pa-compact {
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; border:1.5px solid var(--border-soft); border-radius:var(--radius-lg);
+      padding:11px 13px; margin-bottom:8px; cursor:pointer;
+      background:#fff; transition: border-color .2s, box-shadow .2s, transform .15s;
+    }
+    .pa-compact:hover  { border-color:var(--sky-vivid); box-shadow:0 4px 14px rgba(14,165,233,.12); }
+    .pa-compact:active { transform:scale(.99); }
+    .pa-compact-info { display:flex; align-items:center; gap:10px; min-width:0; flex:1; }
+    .pa-compact-icon { font-size:1.15rem; flex-shrink:0; }
+    .pa-compact-text { min-width:0; flex:1; }
+    .pa-compact-name {
+      font-weight:700; font-size:.87rem; color:var(--sky-deep);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .pa-compact-sub { font-size:.7rem; color:var(--text2); margin-top:2px; }
+    .pa-compact-chevron { color:var(--sky-pale); font-size:.85rem; flex-shrink:0; }
+
+    .pa-badge-compact {
+      font-size:.6rem; font-weight:700; padding:2px 8px; border-radius:30px;
+      flex-shrink:0; margin-left:4px;
+    }
+    .pa-badge-compact.new      { background:#FFF8E1; color:#8B6300; }
+    .pa-badge-compact.received { background:linear-gradient(135deg,#DCFCE7,#86EFAC); color:var(--sky-deep); }
+    .pa-badge-compact.forward  { background:#FFF3E0; color:#E65100; }
+
+    .empty-state {
+      text-align:center; padding:52px 20px; color:var(--text2);
+    }
+    .empty-state i { font-size:2.4rem; display:block; margin-bottom:12px; opacity:.3; color: var(--sky-vivid); }
+
+    /* ========== DASHBOARD: THẺ TRUY CẬP NHANH ========== */
+    .dash-hint { font-size:.76rem; color:var(--text2); margin-bottom:10px; }
+    .qa-list { display:flex; flex-direction:column; gap:8px; }
+    .qa-card {
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; border:1.5px solid var(--border-soft); border-radius:var(--radius-lg);
+      padding:13px; cursor:pointer; background:#fff;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
+    }
+    .qa-card:hover  { border-color:var(--sky-vivid); box-shadow:0 4px 14px rgba(14,165,233,.12); }
+    .qa-card:active { transform:scale(.99); }
+    .qa-card-info { display:flex; align-items:center; gap:12px; min-width:0; flex:1; }
+    .qa-card-icon { font-size:1.4rem; flex-shrink:0; }
+    .qa-card-text { min-width:0; flex:1; }
+    .qa-card-title { font-weight:700; font-size:.9rem; color:var(--sky-deep); }
+    .qa-card-sub   { font-size:.72rem; color:var(--text2); margin-top:2px; }
+    .qa-card-count {
+      font-size:.85rem; font-weight:800; color:var(--sky-vivid);
+      background:var(--bg2); padding:4px 12px; border-radius:30px; flex-shrink:0;
+    }
+    .qa-card-chevron { color:var(--sky-pale); font-size:.85rem; flex-shrink:0; }
+
+    /* ========== DANH SÁCH TOÀN MÀN HÌNH ========== */
+    .list-overlay {
+      position: fixed; inset: 0; z-index: 400;
+      background: var(--bg); display: flex; flex-direction: column;
+      transform: translateY(100%); opacity: 0; pointer-events: none;
+      transition: transform .25s ease, opacity .25s ease;
+    }
+    .list-overlay.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .lo-topbar {
+      flex-shrink: 0; background: #fff;
+      padding: max(12px, env(safe-area-inset-top)) 14px 12px;
+      border-bottom: 1.5px solid var(--border-soft);
+      box-shadow: 0 2px 10px rgba(13,148,136,.06);
+    }
+    .lo-topbar-row1 { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+    .lo-close-btn {
+      width:36px; height:36px; border-radius:50%; flex-shrink:0;
+      background:var(--bg2); color:var(--sky-deep); border:1px solid var(--border-soft);
+      display:flex; align-items:center; justify-content:center;
+      font-size:.95rem; cursor:pointer; transition:background .2s;
+    }
+    .lo-close-btn:hover { background:var(--sky-pale); }
+    .lo-close-btn:active { transform:scale(.94); }
+    .lo-title { flex:1; font-size:1rem; font-weight:800; color:var(--sky-deep); min-width:0; }
+    .lo-count { font-size:.68rem; font-weight:700; color:var(--text2); background:var(--bg2); padding:3px 9px; border-radius:30px; flex-shrink:0; }
+    .lo-topbar .filter-tabs { margin-bottom:10px; }
+    .lo-content {
+      flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
+      padding: 12px 12px calc(90px + env(safe-area-inset-bottom));
+    }
+
+    /* ========== PAGINATION ========== */
+    .pagination {
+      display:flex; justify-content:center; align-items:center;
+      gap:6px; margin-top:16px; flex-wrap:wrap;
+    }
+    .page-btn {
+      min-width:36px; height:36px; border:1.5px solid var(--border-soft);
+      border-radius:var(--radius-sm); background:#fff;
+      color:var(--text2); font-size:.78rem; font-weight:600;
+      cursor:pointer; transition:all .2s; display:flex;
+      align-items:center; justify-content:center; padding:0 4px;
+    }
+    .page-btn:hover { border-color:var(--sky-vivid); color:var(--sky); }
+    .page-btn.active {
+      background:var(--sky-vivid); border-color:var(--sky-vivid);
+      color:#fff; box-shadow:0 2px 8px rgba(14,165,233,.3);
+    }
+    .page-btn:disabled {
+      opacity:.4; cursor:not-allowed;
+    }
+    .page-info {
+      font-size:.7rem; color:var(--text2); padding:0 8px;
+    }
+
+    /* ========== UPLOAD ZONE ========== */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--sky-vivid);
+      background: rgba(14,165,233,.04);
+    }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-icon { font-size: 1.4rem; color: var(--sky-pale); margin-bottom: 3px; }
+    .upload-text { font-size: .75rem; color: var(--text2); }
+    .upload-text strong { color: var(--sky); }
+    .file-list { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+    .file-chip {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--bg2); border-radius: 30px;
+      padding: 4px 10px; font-size: .75rem; color: var(--text);
+    }
+    .file-chip i { color: var(--sky); }
+    .file-chip .remove-file { margin-left: auto; cursor: pointer; color: #bbb; }
+    .file-chip .remove-file:hover { color: var(--red); }
+    .upload-progress {
+      margin-top: 8px;
+      height: 4px;
+      background: var(--border-soft);
+      border-radius: 2px;
+      overflow: hidden;
+      display: none;
+    }
+    .upload-progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--sky-vivid), var(--sky-light));
+      transition: width .3s;
+    }
+
+    /* ========== MODAL ========== */
+    .modal-overlay {
+      position:fixed; inset:0; background:rgba(13,31,60,.55);
+      z-index:800; display:none; align-items:center; justify-content:center;
+      padding:20px;
+    }
+    .modal-overlay.show { display:flex; }
+    .modal-sheet {
+      background:#fff; border-radius:var(--radius-xl);
+      width:100%; max-width:440px; max-height:85vh; overflow-y:auto;
+      padding:0 20px 22px; animation:popIn .22s ease;
+      box-shadow:0 20px 60px rgba(0,0,0,.35);
+      position:relative;
+    }
+    @keyframes popIn { from{transform:scale(.93);opacity:0} to{transform:scale(1);opacity:1} }
+    .modal-header {
+      display:flex; justify-content:space-between; align-items:center;
+      position:sticky; top:0; background:#fff; z-index:2;
+      padding:18px 0 12px; margin-bottom:10px;
+      border-bottom:1px solid var(--border-soft);
+    }
+    .modal-title { font-size:1rem; font-weight:800; color:var(--sky-deep); }
+    .modal-close {
+      background:var(--red); border:2px solid #B91C1C; font-size:1.3rem; width:42px; height:42px;
+      border-radius:50%; color:#fff; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition: transform .15s, background .2s;
+      flex-shrink:0; box-shadow:0 4px 16px rgba(220,38,38,.5);
+      font-weight:700; line-height:1;
+    }
+    .modal-close:hover { background:#B91C1C; transform:scale(1.05); }
+    .modal-close:active { transform:scale(.9); }
+    .modal-close i { font-size:1.2rem; }
+    .detail-row { margin-bottom:12px; }
+    .detail-lbl { font-size:.66rem; font-weight:700; text-transform:uppercase; color:var(--sky); margin-bottom:3px; letter-spacing:.4px; }
+    .detail-val { font-size:.88rem; color:var(--text); line-height:1.6; white-space:pre-wrap; }
+
+    .modal-actions {
+      display:flex; gap:10px; margin-top:16px;
+      flex-wrap:wrap;
+    }
+    .mact-btn {
+      flex:1; padding:12px; border:none; border-radius:var(--radius-lg);
+      font-size:.86rem; font-weight:700; font-family:inherit; cursor:pointer;
+      transition: transform .15s; min-width:70px;
+    }
+    .mact-btn:active { transform:scale(.97); }
+    .mact-btn.received { background:linear-gradient(135deg, var(--sky-vivid), var(--sky-deep)); color:#fff; box-shadow:0 4px 14px rgba(14,165,233,.3); }
+    .mact-btn.del      { background:#FFEEEE; color:var(--red); }
+    .mact-btn.doc-link { background:#DFF5F0; color:#065F46; }
+    .mact-btn.cancel-reply { background:#F5F5F5; color:var(--text2); flex:0 0 84px; }
+
+    /* ========== REPLY ========== */
+    .reply-badge {
+      display:inline-block; font-size:.66rem; font-weight:700; padding:3px 9px;
+      border-radius:30px; margin-bottom:6px;
+    }
+    .reply-badge.reply   { background:linear-gradient(135deg,#DCFCE7,#86EFAC); color:var(--sky-deep); }
+    .reply-badge.forward { background:#FFF3E0; color:#E65100; }
+
+    .reply-form { margin-top:4px; margin-bottom:6px; }
+    .reply-type-tabs { display:flex; gap:8px; }
+    .rtab {
+      flex:1; text-align:center; padding:9px 6px; border-radius:var(--radius-md);
+      font-size:.75rem; font-weight:700; cursor:pointer;
+      background:#fff; border:1.5px solid var(--border);
+      color:var(--text2); transition: all .2s; line-height:1.3;
+    }
+    .rtab.active { background:var(--sky-vivid); border-color:var(--sky-vivid); color:#fff; box-shadow:0 3px 10px rgba(14,165,233,.28); }
+    .reply-form input.field-input,
+    .reply-form textarea.field-input {
+      width:100%; padding:12px 14px; margin-top:10px;
+      border:1.5px solid var(--border); border-radius:var(--radius-lg);
+      font-size:.88rem; font-family:inherit; color:var(--text);
+      line-height:1.55; box-sizing:border-box;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .reply-form textarea.field-input { min-height:100px; resize:vertical; }
+    .reply-form #mForwardNote.field-input { min-height:70px; }
+    .reply-form input.field-input:focus,
+    .reply-form textarea.field-input:focus { outline:none; border-color:var(--sky-vivid); box-shadow:0 0 0 3px rgba(14,165,233,.14); }
+    .reply-form-actions { display:flex; gap:10px; margin-top:12px; }
+
+    /* ========== CONFIRM ========== */
+    .confirm-overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,.5);
+      z-index:900; display:none; align-items:center; justify-content:center; padding:24px;
+    }
+    .confirm-overlay.show { display:flex; }
+    .confirm-box {
+      background:#fff; border-radius:var(--radius-xl);
+      width:100%; max-width:340px; padding:24px 20px; text-align:center;
+    }
+    .confirm-icon { font-size:2rem; margin-bottom:8px; }
+    .confirm-title { font-size:1rem; font-weight:800; color:var(--text); margin-bottom:8px; }
+    .confirm-msg   { font-size:.83rem; color:var(--text2); line-height:1.55; margin-bottom:20px; }
+    .confirm-name  { color:var(--sky-deep); font-weight:700; }
+    .confirm-btns  { display:flex; gap:10px; }
+    .confirm-btns button {
+      flex:1; padding:12px; border:none; border-radius:var(--radius-lg);
+      font-size:.87rem; font-weight:700; font-family:inherit; cursor:pointer;
+    }
+    #confirmOk     { background:var(--red); color:#fff; }
+    #confirmCancel { background:#F5F5F5; color:var(--text); }
+
+    /* ========== BOTTOM NAV ========== */
+    .bottom-nav {
+      position:fixed; bottom:0; left:0; right:0;
+      background: var(--nav-bg);
+      border-top: 1.5px solid var(--sky-pale);
+      display:flex; z-index:500;
+      box-shadow: 0 -4px 20px rgba(13,148,136,.13);
+      padding-bottom:env(safe-area-inset-bottom);
+    }
+    .nav-item {
+      flex:1; display:flex; flex-direction:column; align-items:center;
+      padding:9px 2px 7px; cursor:pointer;
+      font-size:.56rem; font-weight:700; color:#4E9A90;
+      text-transform:uppercase; letter-spacing:.3px;
+      transition:color .2s;
+    }
+    .nav-item i { font-size:1.1rem; margin-bottom:3px; transition: transform .2s; }
+    .nav-item.active { color: var(--nav-active); }
+    .nav-item.active i { transform:translateY(-2px); color: var(--sky-vivid); }
+
+    /* ========== TOAST ========== */
+    #toast {
+      position:fixed; bottom:82px; left:50%; transform:translateX(-50%) translateY(20px);
+      background:#0F2E2A; color:#fff; padding:11px 20px; border-radius:30px;
+      font-size:.84rem; font-weight:600; opacity:0; transition:.3s;
+      z-index:999; white-space:nowrap; pointer-events:none; max-width:90%;
+    }
+    #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+    #toast.error { background:var(--red); }
+
+    .loading-state {
+      text-align:center; padding:40px 20px; color:var(--text2);
+    }
+    .loading-state i { margin-right:6px; color: var(--sky-vivid); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 480px) {
+      .admin-controls { flex-direction: column; align-items:stretch; }
+      .admin-controls .sort-select { min-width:auto; }
+      .page-btn { min-width:32px; height:32px; font-size:.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="icon.png" alt="Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.8em%22 font-size=%2290%22%3E🔐%3C/text%3E%3C/svg%3E'">
+    </div>
+    <div class="login-title">Quản trị hệ thống</div>
+    <div class="login-sub">Ý kiến cử tri — UBMT/TQVN Phường Thanh Khê</div>
+    <div class="pw-wrap">
+      <input type="password" id="pwInput" placeholder="Nhập mật khẩu quản trị" autocomplete="current-password">
+      <span class="pw-eye" id="pwEye"><i class="fas fa-eye-slash"></i></span>
+    </div>
+    <button class="btn-login" id="btnLogin"><i class="fas fa-sign-in-alt"></i>&ensp;Đăng nhập</button>
+    <div class="login-error" id="loginError">❌ Mật khẩu không đúng</div>
+    <div class="back-link" id="backToHome"><i class="fas fa-arrow-left"></i> Quay lại trang chủ</div>
+  </div>
+</div>
+
+<!-- ===== ADMIN PANEL ===== -->
+<div id="adminPanel">
+
+  <!-- Header -->
+  <div class="app-header">
+    <div class="header-row">
+      <div class="header-left">
+        <img src="icon.png" class="header-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.8em%22 font-size=%2290%22%3E🛡️%3C/text%3E%3C/svg%3E'" alt="logo">
+        <div>
+          <div class="header-title">Quản trị</div>
+          <div class="header-sub">UBMT/TQVN Phường Thanh Khê</div>
+        </div>
+      </div>
+      <button class="btn-logout" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Thoát</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat-chip" data-filter="all" style="cursor:pointer"><div class="stat-num" id="statTotal">—</div><div class="stat-lbl">Tổng</div></div>
+      <div class="stat-chip" data-filter="new" style="cursor:pointer"><div class="stat-num" id="statNew">—</div><div class="stat-lbl">Mới</div></div>
+      <div class="stat-chip" data-filter="received" style="cursor:pointer"><div class="stat-num" id="statReceived">—</div><div class="stat-lbl">Đã nhận</div></div>
+    </div>
+  </div>
+
+  <!-- Content: Dashboard truy cập nhanh -->
+  <div class="content-area">
+    <div class="dash-hint"><i class="fas fa-hand-pointer"></i> Chọn một mục bên dưới để xem danh sách chi tiết</div>
+    <div class="qa-list">
+      <div class="qa-card" data-filter="new">
+        <div class="qa-card-info">
+          <span class="qa-card-icon">🆕</span>
+          <div class="qa-card-text">
+            <div class="qa-card-title">Ý kiến mới</div>
+            <div class="qa-card-sub">Chưa xử lý, cần tiếp nhận</div>
+          </div>
+        </div>
+        <span class="qa-card-count" id="qaCountNew">—</span>
+        <i class="fas fa-chevron-right qa-card-chevron"></i>
+      </div>
+      <div class="qa-card" data-filter="received">
+        <div class="qa-card-info">
+          <span class="qa-card-icon">✅</span>
+          <div class="qa-card-text">
+            <div class="qa-card-title">Đã tiếp nhận</div>
+            <div class="qa-card-sub">Đã trả lời hoặc chuyển cơ quan</div>
+          </div>
+        </div>
+        <span class="qa-card-count" id="qaCountReceived">—</span>
+        <i class="fas fa-chevron-right qa-card-chevron"></i>
+      </div>
+      <div class="qa-card" data-filter="all">
+        <div class="qa-card-info">
+          <span class="qa-card-icon">📋</span>
+          <div class="qa-card-text">
+            <div class="qa-card-title">Tất cả ý kiến</div>
+            <div class="qa-card-sub">Toàn bộ danh sách</div>
+          </div>
+        </div>
+        <span class="qa-card-count" id="qaCountAll">—</span>
+        <i class="fas fa-chevron-right qa-card-chevron"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DANH SÁCH TOÀN MÀN HÌNH ===== -->
+<div class="list-overlay" id="listOverlay">
+  <div class="lo-topbar">
+    <div class="lo-topbar-row1">
+      <div class="lo-close-btn" id="loClose"><i class="fas fa-arrow-left"></i></div>
+      <span class="lo-title" id="loTitle">Ý kiến mới</span>
+      <span class="lo-count" id="loCount"></span>
+    </div>
+    <div class="filter-tabs">
+      <div class="ftab active" data-filter="new">🆕 Ý kiến mới</div>
+      <div class="ftab" data-filter="received">✅ Đã tiếp nhận</div>
+      <div class="ftab" data-filter="all">📋 Tất cả</div>
+    </div>
+    <div class="admin-controls">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="adminSearchInput" placeholder="Tìm kiếm...">
+      </div>
+      <select class="sort-select" id="adminSortSelect">
+        <option value="newest">Mới nhất</option>
+        <option value="oldest">Cũ nhất</option>
+        <option value="az">A → Z</option>
+        <option value="za">Z → A</option>
+      </select>
+    </div>
+  </div>
+  <div class="lo-content">
+    <div id="paList">
+      <div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>
+    </div>
+    <div class="pagination" id="adminPagination"></div>
+  </div>
+</div>
+
+<!-- ===== MODAL CHI TIẾT ===== -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <div class="modal-title">Chi tiết ý kiến</div>
+      <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="detail-row"><div class="detail-lbl">Họ và tên</div><div class="detail-val" id="mHoTen"></div></div>
+    <div class="detail-row"><div class="detail-lbl">Địa chỉ / SĐT</div><div class="detail-val" id="mDiaChi"></div></div>
+    <div class="detail-row"><div class="detail-lbl">Thời gian gửi</div><div class="detail-val" id="mTime"></div></div>
+    <div class="detail-row"><div class="detail-lbl">Nội dung ý kiến</div><div class="detail-val" id="mNoiDung"></div></div>
+    <div class="detail-row" id="mAttachRow" style="display:none">
+      <div class="detail-lbl">Tệp đính kèm</div>
+      <div class="detail-val" id="mAttach"></div>
+    </div>
+
+    <div class="detail-row" id="mReplyViewRow" style="display:none">
+      <div class="detail-lbl">Phản hồi từ Ban quản trị</div>
+      <span class="reply-badge" id="mReplyBadge"></span>
+      <div class="detail-val" id="mReplyContent"></div>
+      <div id="mReplyFiles" style="margin-top:8px;display:none">
+        <div style="font-size:.66rem;font-weight:700;text-transform:uppercase;color:var(--sky);margin-bottom:3px;">📎 Văn bản trả lời</div>
+        <div id="mReplyFileList" class="detail-val"></div>
+      </div>
+    </div>
+
+    <!-- FORM PHẢN HỒI CHÍNH -->
+    <div class="reply-form" id="mReplyForm" style="display:none">
+      <div class="detail-lbl">Hình thức xử lý</div>
+      <div class="reply-type-tabs">
+        <div class="rtab active" data-type="reply"><i class="fas fa-comment-dots"></i><br>Trả lời trực tiếp</div>
+        <div class="rtab" data-type="forward"><i class="fas fa-share-square"></i><br>Chuyển cơ quan chức năng</div>
+      </div>
+      <textarea id="mReplyText" class="field-input" placeholder="Nhập nội dung trả lời cho cư dân…"></textarea>
+      
+      <div style="margin-top:10px">
+        <div class="detail-lbl">Tệp đính kèm phản hồi (tuỳ chọn)</div>
+        <div class="upload-zone" id="replyUploadZone">
+          <input type="file" id="replyFileInput" multiple accept="image/*,.pdf,.doc,.docx,.txt,.xls,.xlsx">
+          <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+          <div class="upload-text">
+            <strong>Chọn ảnh hoặc tệp</strong><br>
+            Hỗ trợ: JPG, PNG, PDF, DOC, TXT
+          </div>
+        </div>
+        <div class="upload-progress" id="replyUploadProgress">
+          <div class="upload-progress-bar" id="replyUploadProgressBar"></div>
+        </div>
+        <div class="file-list" id="replyFileList"></div>
+      </div>
+      
+      <div class="forward-fields" id="mForwardFields" style="display:none">
+        <div class="detail-lbl" style="margin-top:2px">Ý kiến đã được chuyển đến</div>
+        <input type="text" id="mForwardAgency" class="field-input" placeholder="VD: Công an phường, Tổ dân phố, Ban quản lý…">
+        <div class="detail-lbl" style="margin-top:10px">Ghi chú thêm (không bắt buộc)</div>
+        <textarea id="mForwardNote" class="field-input" placeholder="Thông tin bổ sung nếu có…"></textarea>
+      </div>
+      <div class="reply-form-actions">
+        <button class="mact-btn cancel-reply" id="mBtnCancelReply">Huỷ</button>
+        <button class="mact-btn received" id="mBtnSubmitReply"><i class="fas fa-paper-plane"></i> Gửi phản hồi</button>
+      </div>
+    </div>
+
+    <!-- NÚT HÀNH ĐỘNG CHÍNH -->
+    <div class="modal-actions" id="mActionsView">
+      <button class="mact-btn received" id="mBtnReply"><i class="fas fa-reply"></i> Trả lời</button>
+      <button class="mact-btn doc-link" id="mBtnForwardReply" style="display:none"><i class="fas fa-comment"></i> Phản hồi</button>
+      <button class="mact-btn doc-link" id="mBtnDoc" style="display:none"><i class="fas fa-file-word"></i> Xem Doc</button>
+      <button class="mact-btn del" id="mBtnDelete"><i class="fas fa-trash"></i> Xoá</button>
+    </div>
+    
+    <!-- FORM PHẢN HỒI RIÊNG CHO FORWARD -->
+    <div class="reply-form" id="mForwardReplyForm" style="display:none">
+      <div class="detail-lbl">Phản hồi về việc chuyển cơ quan</div>
+      <textarea id="mForwardReplyText" class="field-input" placeholder="Nhập nội dung phản hồi về kết quả xử lý…"></textarea>
+      <div style="margin-top:10px">
+        <div class="detail-lbl">Tệp đính kèm phản hồi (tuỳ chọn)</div>
+        <div class="upload-zone" id="forwardReplyUploadZone">
+          <input type="file" id="forwardReplyFileInput" multiple accept="image/*,.pdf,.doc,.docx,.txt,.xls,.xlsx">
+          <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+          <div class="upload-text">
+            <strong>Chọn ảnh hoặc tệp</strong><br>
+            Hỗ trợ: JPG, PNG, PDF, DOC, TXT
+          </div>
+        </div>
+        <div class="upload-progress" id="forwardReplyUploadProgress">
+          <div class="upload-progress-bar" id="forwardReplyUploadProgressBar"></div>
+        </div>
+        <div class="file-list" id="forwardReplyFileList"></div>
+      </div>
+      <div class="reply-form-actions">
+        <button class="mact-btn cancel-reply" id="mBtnCancelForwardReply">Huỷ</button>
+        <button class="mact-btn received" id="mBtnSubmitForwardReply"><i class="fas fa-paper-plane"></i> Gửi phản hồi</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONFIRM DIALOG ===== -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-icon" id="confirmIcon">⚠️</div>
+    <div class="confirm-title" id="confirmTitle"></div>
+    <div class="confirm-msg" id="confirmMsg"></div>
+    <div class="confirm-btns">
+      <button id="confirmCancel">Huỷ</button>
+      <button id="confirmOk">Xác nhận</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" id="adminNav" style="display:none">
+  <div class="nav-item active" data-filter="new">
+    <i class="fas fa-bell"></i>Ý kiến mới
+  </div>
+  <div class="nav-item" data-filter="received">
+    <i class="fas fa-check-circle"></i>Đã nhận
+  </div>
+  <div class="nav-item" data-filter="all">
+    <i class="fas fa-list"></i>Tất cả
+  </div>
+  <div class="nav-item" data-filter="home">
+    <i class="fas fa-home"></i>Trang chủ
+  </div>
+</nav>
+
+<div id="toast"></div>
+
+<script>
+// ============================================================
+//  HELPERS
+// ============================================================
+function toast(msg, isErr = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show' + (isErr ? ' error' : '');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.className = '', 3000);
+}
+function escH(s) {
+  if (s === null || s === undefined || s === '') return '';
+  return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+function fmtDate(ts) {
+  try { return new Date(ts).toLocaleString('vi-VN'); } catch { return ts || ''; }
+}
+function badgeClass(item) {
+  if (item.status !== 'received') return 'new';
+  return item.loaiXuLy === 'forward' ? 'forward' : 'received';
+}
+function badgeLabel(item) {
+  if (item.status !== 'received') return '🆕 Mới';
+  return item.loaiXuLy === 'forward' ? '📤 Đã chuyển' : '✅ Đã trả lời';
+}
+function getFileNameFromUrl(url) {
+  try {
+    const cleanUrl = url.split('?')[0];
+    const parts = cleanUrl.split('/');
+    let fileName = parts[parts.length - 1];
+    if (url.includes('/d/') && !fileName.includes('.')) {
+      const match = url.match(/\/d\/([^/]+)/);
+      if (match) {
+        const nameMatch = url.match(/[?&]name=([^&]+)/);
+        if (nameMatch) return decodeURIComponent(nameMatch[1]);
+        return match[1].substring(0, 12) + '…';
+      }
+    }
+    fileName = decodeURIComponent(fileName);
+    if (!fileName || fileName.length < 3) return 'Văn bản trả lời';
+    return fileName;
+  } catch { return 'Văn bản trả lời'; }
+}
+function getFileIcon(fileName) {
+  const name = fileName.toLowerCase();
+  if (name.includes('.doc') || name.includes('.docx')) return 'fa-solid fa-file-word';
+  if (name.includes('.pdf')) return 'fa-solid fa-file-pdf';
+  if (name.includes('.jpg') || name.includes('.jpeg') || name.includes('.png')) return 'fa-solid fa-file-image';
+  if (name.includes('.xls') || name.includes('.xlsx')) return 'fa-solid fa-file-excel';
+  if (name.includes('.txt')) return 'fa-solid fa-file-lines';
+  return 'fa-solid fa-file';
+}
+function uniqueUrls(urls) {
+  const seen = new Set();
+  return urls.filter(url => { const t = url.trim(); if (seen.has(t)) return false; seen.add(t); return true; });
+}
+
+// ============================================================
+//  FILE TO BASE64
+// ============================================================
+async function fileToBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = () => rej(new Error('Đọc file thất bại'));
+    r.readAsDataURL(file);
+  });
+}
+
+// ============================================================
+//  PAGINATION STATE
+// ============================================================
+const ITEMS_PER_PAGE = 20;
+let currentPage = 1;
+let filteredAdminItems = [];
+let allAdminItems = [];
+let adminSearchTimeout = null;
+
+// ============================================================
+//  LOGIN
+// ============================================================
+const pwInput = document.getElementById('pwInput');
+const pwEye   = document.getElementById('pwEye');
+
+pwEye.addEventListener('click', () => {
+  const show = pwInput.type === 'password';
+  pwInput.type = show ? 'text' : 'password';
+  pwEye.innerHTML = `<i class="fas fa-eye${show ? '' : '-slash'}"></i>`;
+});
+
+document.getElementById('btnLogin').addEventListener('click', doLogin);
+pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+function doLogin() {
+  const pw = pwInput.value;
+  const correct = (typeof ADMIN_PASSWORD !== 'undefined') ? ADMIN_PASSWORD : 'admin@2026';
+  if (pw === correct) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').classList.add('show');
+    document.getElementById('adminNav').style.display = 'flex';
+    loadList();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    pwInput.value = '';
+  }
+}
+
+document.getElementById('backToHome').addEventListener('click', () => {
+  window.location.href = (typeof HOME_URL !== 'undefined') ? HOME_URL : 'index.html';
+});
+document.getElementById('btnLogout').addEventListener('click', () => {
+  document.getElementById('adminPanel').classList.remove('show');
+  document.getElementById('adminNav').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  pwInput.value = '';
+});
+
+// ============================================================
+//  DATA
+// ============================================================
+let allData = [];
+let curFilter = 'new';
+let curItem = null;
+
+async function apiPost(body) {
+  const url = (typeof WEBAPP_URL !== 'undefined') ? WEBAPP_URL : '';
+  const res = await fetch(url, { method:'POST', body:JSON.stringify(body) });
+  return res.json();
+}
+
+// ============================================================
+//  RENDER PAGINATION
+// ============================================================
+function renderAdminPagination(totalItems, currentPage, itemsPerPage) {
+  const container = document.getElementById('adminPagination');
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  if (totalPages <= 1) { container.innerHTML = ''; return; }
+
+  let html = '';
+  html += `<button class="page-btn" data-page="prev" ${currentPage <= 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>`;
+  
+  let startPage = Math.max(1, currentPage - 2);
+  let endPage = Math.min(totalPages, currentPage + 2);
+  if (startPage > 1) { html += `<button class="page-btn" data-page="1">1</button>${startPage > 2 ? '<span class="page-info">…</span>' : ''}`; }
+  for (let i = startPage; i <= endPage; i++) {
+    html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+  }
+  if (endPage < totalPages) { html += `${endPage < totalPages - 1 ? '<span class="page-info">…</span>' : ''}<button class="page-btn" data-page="${totalPages}">${totalPages}</button>`; }
+  
+  html += `<button class="page-btn" data-page="next" ${currentPage >= totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>`;
+  html += `<span class="page-info">${totalItems} ý kiến</span>`;
+  container.innerHTML = html;
+
+  container.querySelectorAll('.page-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const page = btn.dataset.page;
+      if (page === 'prev' && currentPage > 1) { currentPage--; renderAdminPage(); }
+      else if (page === 'next' && currentPage < totalPages) { currentPage++; renderAdminPage(); }
+      else if (page !== 'prev' && page !== 'next') { currentPage = parseInt(page); renderAdminPage(); }
+    });
+  });
+}
+
+// ============================================================
+//  RENDER ADMIN PAGE
+// ============================================================
+function renderAdminPage() {
+  const box = document.getElementById('paList');
+  document.getElementById('loCount').textContent = filteredAdminItems.length ? `${filteredAdminItems.length} ý kiến` : '';
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+  const pageItems = filteredAdminItems.slice(start, end);
+
+  if (!pageItems.length) {
+    box.innerHTML = `<div class="empty-state"><i class="fas fa-search"></i>Không tìm thấy ý kiến nào</div>`;
+    renderAdminPagination(filteredAdminItems.length, currentPage, ITEMS_PER_PAGE);
+    return;
+  }
+
+  box.innerHTML = pageItems.map(item => {
+    const cls = badgeClass(item);
+    const label = badgeLabel(item);
+    const isForward = item.loaiXuLy === 'forward';
+    const icon = cls === 'new' ? '🕐' : (isForward ? '📤' : '✅');
+    const subText = cls === 'new' ? 'Chờ tiếp nhận' : (isForward ? 'Đã chuyển' : 'Đã trả lời');
+    return `
+    <div class="pa-compact" data-id="${escH(item.id)}">
+      <div class="pa-compact-info">
+        <span class="pa-compact-icon">${icon}</span>
+        <div class="pa-compact-text">
+          <div class="pa-compact-name">${escH(item.hoTen)}</div>
+          <div class="pa-compact-sub">${subText} · ${fmtDate(item.timestamp)}</div>
+        </div>
+      </div>
+      <span class="pa-badge-compact ${cls}">${label}</span>
+      <i class="fas fa-chevron-right pa-compact-chevron"></i>
+    </div>`;
+  }).join('');
+
+  box.querySelectorAll('.pa-compact').forEach(el => {
+    el.addEventListener('click', () => {
+      const item = filteredAdminItems.find(r => r.id === el.dataset.id);
+      if (item) openModal(item);
+    });
+  });
+
+  renderAdminPagination(filteredAdminItems.length, currentPage, ITEMS_PER_PAGE);
+}
+
+// ============================================================
+//  FILTER, SORT, SEARCH
+// ============================================================
+function filterAdminItems(items, filter, searchTerm, sortType) {
+  let result = [...items];
+  
+  // Filter by status
+  if (filter === 'new') {
+    result = result.filter(r => r.status === 'new');
+  } else if (filter === 'received') {
+    result = result.filter(r => r.status === 'received');
+  }
+  
+  // Search
+  const term = searchTerm.toLowerCase().trim();
+  if (term) {
+    result = result.filter(item =>
+      (item.hoTen || '').toLowerCase().includes(term) ||
+      (item.noiDung || '').toLowerCase().includes(term) ||
+      (item.diaChi || '').toLowerCase().includes(term) ||
+      (item.id || '').toLowerCase().includes(term)
+    );
+  }
+  
+  // Sort
+  switch (sortType) {
+    case 'oldest': result.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)); break;
+    case 'az': result.sort((a, b) => (a.hoTen || '').localeCompare(b.hoTen || '')); break;
+    case 'za': result.sort((a, b) => (b.hoTen || '').localeCompare(a.hoTen || '')); break;
+    default: result.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  }
+  
+  return result;
+}
+
+// ============================================================
+//  LOAD LIST
+// ============================================================
+async function loadList() {
+  const box = document.getElementById('paList');
+  box.innerHTML = `<div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>`;
+  try {
+    const url = (typeof WEBAPP_URL !== 'undefined') ? WEBAPP_URL : '';
+    const res  = await fetch(url + '?action=get&t=' + Date.now());
+    const json = await res.json();
+
+    if (!json.success) throw new Error(json.error || 'Lỗi server');
+    allData = json.data || [];
+    allAdminItems = allData;
+
+    const all      = allData;
+    const newItems = allData.filter(r => r.status === 'new');
+    const rcvItems = allData.filter(r => r.status === 'received');
+    document.getElementById('statTotal').textContent    = all.length;
+    document.getElementById('statNew').textContent      = newItems.length;
+    document.getElementById('statReceived').textContent = rcvItems.length;
+    document.getElementById('qaCountAll').textContent      = all.length;
+    document.getElementById('qaCountNew').textContent      = newItems.length;
+    document.getElementById('qaCountReceived').textContent = rcvItems.length;
+
+    const searchTerm = document.getElementById('adminSearchInput').value || '';
+    const sortType = document.getElementById('adminSortSelect').value || 'newest';
+    
+    filteredAdminItems = filterAdminItems(allData, curFilter, searchTerm, sortType);
+    currentPage = 1;
+    renderAdminPage();
+  } catch(err) {
+    box.innerHTML = `<div class="empty-state" style="color:var(--red)"><i class="fas fa-exclamation-triangle"></i>Lỗi: ${escH(err.message)}</div>`;
+  }
+}
+
+// ============================================================
+//  DANH SÁCH TOÀN MÀN HÌNH: mở / đóng
+// ============================================================
+const ftabLabels = { new: '🆕 Ý kiến mới', received: '✅ Đã tiếp nhận', all: '📋 Tất cả' };
+
+function setActiveFilterUI(filter) {
+  document.querySelectorAll('.ftab').forEach(t => t.classList.toggle('active', t.dataset.filter === filter));
+  document.querySelectorAll('.nav-item[data-filter]').forEach(n => n.classList.toggle('active', n.dataset.filter === filter));
+  document.getElementById('loTitle').textContent = ftabLabels[filter] || 'Danh sách';
+}
+
+function openListOverlay(filter) {
+  curFilter = filter;
+  setActiveFilterUI(filter);
+  document.getElementById('listOverlay').classList.add('show');
+  const searchTerm = document.getElementById('adminSearchInput').value || '';
+  const sortType = document.getElementById('adminSortSelect').value || 'newest';
+  filteredAdminItems = filterAdminItems(allData, curFilter, searchTerm, sortType);
+  currentPage = 1;
+  renderAdminPage();
+}
+
+function closeListOverlay() {
+  document.getElementById('listOverlay').classList.remove('show');
+}
+
+document.getElementById('loClose').addEventListener('click', closeListOverlay);
+
+// Thẻ truy cập nhanh trên dashboard
+document.querySelectorAll('.qa-card').forEach(card => {
+  card.addEventListener('click', () => openListOverlay(card.dataset.filter));
+});
+
+// Thẻ số liệu trên header
+document.querySelectorAll('.stat-chip[data-filter]').forEach(chip => {
+  chip.addEventListener('click', () => openListOverlay(chip.dataset.filter));
+});
+
+// ============================================================
+//  FILTER TABS (bên trong danh sách toàn màn hình)
+// ============================================================
+document.querySelectorAll('.ftab').forEach(t => {
+  t.addEventListener('click', () => {
+    curFilter = t.dataset.filter;
+    setActiveFilterUI(curFilter);
+    // Re-filter with current search and sort
+    const searchTerm = document.getElementById('adminSearchInput').value || '';
+    const sortType = document.getElementById('adminSortSelect').value || 'newest';
+    filteredAdminItems = filterAdminItems(allData, curFilter, searchTerm, sortType);
+    currentPage = 1;
+    renderAdminPage();
+  });
+});
+
+// BOTTOM NAV
+document.querySelectorAll('.nav-item[data-filter]').forEach(n => {
+  n.addEventListener('click', () => {
+    const f = n.dataset.filter;
+    if (f === 'home') { window.location.href = (typeof HOME_URL !== 'undefined') ? HOME_URL : 'index.html'; return; }
+    openListOverlay(f);
+  });
+});
+
+// ============================================================
+//  SEARCH & SORT EVENTS
+// ============================================================
+document.getElementById('adminSearchInput').addEventListener('input', function() {
+  clearTimeout(adminSearchTimeout);
+  adminSearchTimeout = setTimeout(() => {
+    const searchTerm = this.value || '';
+    const sortType = document.getElementById('adminSortSelect').value || 'newest';
+    filteredAdminItems = filterAdminItems(allData, curFilter, searchTerm, sortType);
+    currentPage = 1;
+    renderAdminPage();
+  }, 300);
+});
+
+document.getElementById('adminSortSelect').addEventListener('change', function() {
+  const searchTerm = document.getElementById('adminSearchInput').value || '';
+  filteredAdminItems = filterAdminItems(allData, curFilter, searchTerm, this.value);
+  currentPage = 1;
+  renderAdminPage();
+});
+
+// ============================================================
+//  MODAL
+// ============================================================
+function openModal(item) {
+  curItem = item;
+  document.getElementById('mHoTen').textContent   = item.hoTen   || '';
+  document.getElementById('mDiaChi').textContent  = item.diaChi  || '(Không có)';
+  document.getElementById('mTime').textContent     = fmtDate(item.timestamp);
+  document.getElementById('mNoiDung').textContent  = item.noiDung || '';
+
+  if (item.attachUrl) {
+    document.getElementById('mAttachRow').style.display = 'block';
+    document.getElementById('mAttach').innerHTML =
+      uniqueUrls(String(item.attachUrl).split('\n').filter(u => u.trim()))
+        .map(u => {
+          const fileName = getFileNameFromUrl(u);
+          const icon = getFileIcon(fileName);
+          return `<a href="${escH(u)}" target="_blank" style="color:var(--sky);display:block;margin-bottom:4px;font-size:.82rem"><i class="${icon}" style="margin-right:6px;color:var(--sky-vivid);"></i>${escH(fileName)}</a>`;
+        }).join('');
+  } else {
+    document.getElementById('mAttachRow').style.display = 'none';
+  }
+
+  const docBtn = document.getElementById('mBtnDoc');
+  if (item.docUrl) {
+    docBtn.style.display = 'flex';
+    docBtn.onclick = () => window.open(item.docUrl, '_blank');
+  } else {
+    docBtn.style.display = 'none';
+  }
+
+  resetReplyUI(item);
+  document.getElementById('modal').classList.add('show');
+}
+
+// ============================================================
+//  REPLY (TRẢ LỜI / CHUYỂN CƠ QUAN CHỨC NĂNG)
+// ============================================================
+let curReplyType = 'reply';
+let replyFiles = [];
+let forwardReplyFiles = [];
+
+// === REPLY FILES ===
+const replyUploadZone = document.getElementById('replyUploadZone');
+const replyFileInput = document.getElementById('replyFileInput');
+const replyFileList = document.getElementById('replyFileList');
+
+replyUploadZone.addEventListener('dragover', e => { e.preventDefault(); replyUploadZone.classList.add('dragover'); });
+replyUploadZone.addEventListener('dragleave', () => replyUploadZone.classList.remove('dragover'));
+replyUploadZone.addEventListener('drop', e => {
+  e.preventDefault(); replyUploadZone.classList.remove('dragover');
+  addReplyFiles(e.dataTransfer.files);
+});
+replyFileInput.addEventListener('change', () => {
+  addReplyFiles(replyFileInput.files);
+  replyFileInput.value = '';
+});
+
+function addReplyFiles(files) {
+  [...files].forEach(f => {
+    if (!replyFiles.find(x => x.name === f.name && x.size === f.size))
+      replyFiles.push(f);
+  });
+  renderReplyFileList();
+}
+
+function renderReplyFileList() {
+  replyFileList.innerHTML = replyFiles.map((f, i) => `
+    <div class="file-chip">
+      <i class="fas fa-${f.type.startsWith('image') ? 'image' : 'file-alt'}"></i>
+      <span>${escH(f.name)} (${(f.size/1024).toFixed(1)} KB)</span>
+      <span class="remove-file" data-idx="${i}"><i class="fas fa-times"></i></span>
+    </div>
+  `).join('');
+  replyFileList.querySelectorAll('.remove-file').forEach(btn => {
+    btn.addEventListener('click', () => {
+      replyFiles.splice(+btn.dataset.idx, 1);
+      renderReplyFileList();
+    });
+  });
+}
+
+function showReplyProgress(show) {
+  const prog = document.getElementById('replyUploadProgress');
+  prog.style.display = show ? 'block' : 'none';
+  document.getElementById('replyUploadProgressBar').style.width = '0%';
+}
+
+function updateReplyProgress(percent) {
+  document.getElementById('replyUploadProgressBar').style.width = percent + '%';
+}
+
+async function uploadReplyFilesFn(id, files) {
+  const uploadedUrls = [];
+  for (let i = 0; i < files.length; i++) {
+    try {
+      const b64 = await fileToBase64(files[i]);
+      updateReplyProgress(((i + 1) / files.length) * 100);
+      const response = await fetch(WEBAPP_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: 'uploadReplyFile',
+          id: id,
+          fileName: files[i].name,
+          mimeType: files[i].type,
+          base64Data: b64
+        })
+      });
+      const result = await response.json();
+      if (result.success && result.fileUrl) {
+        uploadedUrls.push(result.fileUrl);
+      }
+    } catch(e) {
+      console.warn('Upload reply file error:', e);
+    }
+  }
+  return uploadedUrls;
+}
+
+// === FORWARD REPLY FILES ===
+const forwardReplyUploadZone = document.getElementById('forwardReplyUploadZone');
+const forwardReplyFileInput = document.getElementById('forwardReplyFileInput');
+const forwardReplyFileList = document.getElementById('forwardReplyFileList');
+
+forwardReplyUploadZone.addEventListener('dragover', e => { e.preventDefault(); forwardReplyUploadZone.classList.add('dragover'); });
+forwardReplyUploadZone.addEventListener('dragleave', () => forwardReplyUploadZone.classList.remove('dragover'));
+forwardReplyUploadZone.addEventListener('drop', e => {
+  e.preventDefault(); forwardReplyUploadZone.classList.remove('dragover');
+  addForwardReplyFiles(e.dataTransfer.files);
+});
+forwardReplyFileInput.addEventListener('change', () => {
+  addForwardReplyFiles(forwardReplyFileInput.files);
+  forwardReplyFileInput.value = '';
+});
+
+function addForwardReplyFiles(files) {
+  [...files].forEach(f => {
+    if (!forwardReplyFiles.find(x => x.name === f.name && x.size === f.size))
+      forwardReplyFiles.push(f);
+  });
+  renderForwardReplyFileList();
+}
+
+function renderForwardReplyFileList() {
+  forwardReplyFileList.innerHTML = forwardReplyFiles.map((f, i) => `
+    <div class="file-chip">
+      <i class="fas fa-${f.type.startsWith('image') ? 'image' : 'file-alt'}"></i>
+      <span>${escH(f.name)} (${(f.size/1024).toFixed(1)} KB)</span>
+      <span class="remove-file" data-idx="${i}"><i class="fas fa-times"></i></span>
+    </div>
+  `).join('');
+  forwardReplyFileList.querySelectorAll('.remove-file').forEach(btn => {
+    btn.addEventListener('click', () => {
+      forwardReplyFiles.splice(+btn.dataset.idx, 1);
+      renderForwardReplyFileList();
+    });
+  });
+}
+
+function showForwardReplyProgress(show) {
+  const prog = document.getElementById('forwardReplyUploadProgress');
+  prog.style.display = show ? 'block' : 'none';
+  document.getElementById('forwardReplyUploadProgressBar').style.width = '0%';
+}
+
+function updateForwardReplyProgress(percent) {
+  document.getElementById('forwardReplyUploadProgressBar').style.width = percent + '%';
+}
+
+async function uploadForwardReplyFilesFn(id, files) {
+  const uploadedUrls = [];
+  for (let i = 0; i < files.length; i++) {
+    try {
+      const b64 = await fileToBase64(files[i]);
+      updateForwardReplyProgress(((i + 1) / files.length) * 100);
+      const response = await fetch(WEBAPP_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: 'uploadReplyFile',
+          id: id,
+          fileName: files[i].name,
+          mimeType: files[i].type,
+          base64Data: b64
+        })
+      });
+      const result = await response.json();
+      if (result.success && result.fileUrl) {
+        uploadedUrls.push(result.fileUrl);
+      }
+    } catch(e) {
+      console.warn('Upload forward reply file error:', e);
+    }
+  }
+  return uploadedUrls;
+}
+
+// === RESET REPLY UI ===
+function resetReplyUI(item) {
+  const viewRow  = document.getElementById('mReplyViewRow');
+  const form     = document.getElementById('mReplyForm');
+  const forwardReplyForm = document.getElementById('mForwardReplyForm');
+  const replyBtn = document.getElementById('mBtnReply');
+  const forwardReplyBtn = document.getElementById('mBtnForwardReply');
+  
+  form.style.display = 'none';
+  forwardReplyForm.style.display = 'none';
+  
+  replyFiles = [];
+  renderReplyFileList();
+  forwardReplyFiles = [];
+  renderForwardReplyFileList();
+  showReplyProgress(false);
+  showForwardReplyProgress(false);
+
+  if (item.status === 'received' && item.loaiXuLy === 'forward') {
+    forwardReplyBtn.style.display = 'flex';
+  } else {
+    forwardReplyBtn.style.display = 'none';
+  }
+
+  // Hiển thị file phản hồi
+  const replyFilesContainer = document.getElementById('mReplyFiles');
+  const replyFileListEl = document.getElementById('mReplyFileList');
+  if (item.replyFileUrls) {
+    const urls = uniqueUrls(String(item.replyFileUrls).split('\n').filter(u => u.trim()));
+    if (urls.length > 0) {
+      replyFilesContainer.style.display = 'block';
+      replyFileListEl.innerHTML = urls.map(u => {
+        const fileName = getFileNameFromUrl(u);
+        const icon = getFileIcon(fileName);
+        return `<a href="${escH(u)}" target="_blank" style="color:var(--sky);display:block;margin-bottom:4px;font-size:.82rem"><i class="${icon}" style="margin-right:6px;color:var(--sky-vivid);"></i>${escH(fileName)}</a>`;
+      }).join('');
+    } else {
+      replyFilesContainer.style.display = 'none';
+    }
+  } else {
+    replyFilesContainer.style.display = 'none';
+  }
+
+  if (item.status === 'received' && item.phanHoi) {
+    viewRow.style.display = 'block';
+    const isForward = item.loaiXuLy === 'forward';
+    const badge = document.getElementById('mReplyBadge');
+    badge.textContent = isForward ? '📤 Đã chuyển cơ quan chức năng' : '✅ Đã trả lời cư dân';
+    badge.className = 'reply-badge ' + (isForward ? 'forward' : 'reply');
+    document.getElementById('mReplyContent').textContent = item.phanHoi;
+    replyBtn.innerHTML = '<i class="fas fa-edit"></i> Sửa phản hồi';
+  } else {
+    viewRow.style.display = 'none';
+    replyBtn.innerHTML = item.status === 'received'
+      ? '<i class="fas fa-edit"></i> Bổ sung phản hồi'
+      : '<i class="fas fa-reply"></i> Trả lời';
+  }
+}
+
+// === BUILD FORWARD CONTENT ===
+const FWD_PREFIX = 'Ý kiến đã được chuyển đến ';
+const FWD_SUFFIX = 'Chúng tôi sẽ phản hồi khi có thông tin!';
+
+function buildForwardContent(agency, note) {
+  let out = FWD_PREFIX + agency;
+  if (note) out += '\n' + note;
+  out += '\n' + FWD_SUFFIX;
+  return out;
+}
+
+function parseForwardContent(text) {
+  const lines = (text || '').split('\n');
+  if (lines.length >= 2 && lines[0].startsWith(FWD_PREFIX) && lines[lines.length - 1].trim() === FWD_SUFFIX) {
+    return { agency: lines[0].slice(FWD_PREFIX.length).trim(), note: lines.slice(1, -1).join('\n').trim() };
+  }
+  return { agency: '', note: text || '' };
+}
+
+function updateReplyFormUI() {
+  const isForward = curReplyType === 'forward';
+  document.getElementById('mReplyText').style.display = isForward ? 'none' : 'block';
+  document.getElementById('mForwardFields').style.display = isForward ? 'block' : 'none';
+  document.getElementById('mReplyText').placeholder = 'Nhập nội dung trả lời cho cư dân…';
+}
+
+// === EVENT: Mở form reply chính ===
+document.getElementById('mBtnReply').addEventListener('click', () => {
+  if (!curItem) return;
+  const form = document.getElementById('mReplyForm');
+  const opening = form.style.display === 'none';
+  if (opening) {
+    curReplyType = curItem.loaiXuLy === 'forward' ? 'forward' : 'reply';
+    document.querySelectorAll('.rtab').forEach(t => t.classList.toggle('active', t.dataset.type === curReplyType));
+
+    if (curReplyType === 'forward' && curItem.phanHoi) {
+      const { agency, note } = parseForwardContent(curItem.phanHoi);
+      document.getElementById('mForwardAgency').value = agency;
+      document.getElementById('mForwardNote').value = note;
+      document.getElementById('mReplyText').value = '';
+    } else {
+      document.getElementById('mReplyText').value = curItem.phanHoi || '';
+      document.getElementById('mForwardAgency').value = '';
+      document.getElementById('mForwardNote').value = '';
+    }
+
+    replyFiles = [];
+    renderReplyFileList();
+    showReplyProgress(false);
+
+    updateReplyFormUI();
+    document.getElementById('mReplyViewRow').style.display = 'none';
+    form.style.display = 'block';
+    document.getElementById('mForwardReplyForm').style.display = 'none';
+  } else {
+    form.style.display = 'none';
+    resetReplyUI(curItem);
+  }
+});
+
+document.getElementById('mBtnCancelReply').addEventListener('click', () => {
+  document.getElementById('mReplyForm').style.display = 'none';
+  replyFiles = [];
+  renderReplyFileList();
+  showReplyProgress(false);
+  if (curItem) resetReplyUI(curItem);
+});
+
+document.querySelectorAll('.rtab').forEach(t => {
+  t.addEventListener('click', () => {
+    curReplyType = t.dataset.type;
+    document.querySelectorAll('.rtab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    updateReplyFormUI();
+  });
+});
+
+// === EVENT: Submit reply chính ===
+document.getElementById('mBtnSubmitReply').addEventListener('click', async () => {
+  if (!curItem) return;
+
+  let content;
+  if (curReplyType === 'forward') {
+    const agency = document.getElementById('mForwardAgency').value.trim();
+    const note = document.getElementById('mForwardNote').value.trim();
+    if (!agency) { toast('⚠ Vui lòng nhập tên cơ quan/đơn vị tiếp nhận', true); return; }
+    content = buildForwardContent(agency, note);
+  } else {
+    content = document.getElementById('mReplyText').value.trim();
+    if (!content) { toast('⚠ Vui lòng nhập nội dung', true); return; }
+  }
+
+  const btn = document.getElementById('mBtnSubmitReply');
+  const oldHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi…';
+  showReplyProgress(true);
+
+  try {
+    let fileUrls = [];
+    if (replyFiles.length > 0) {
+      fileUrls = await uploadReplyFilesFn(curItem.id, replyFiles);
+    }
+    
+    const r = await apiPost({
+      action: 'reply',
+      id: curItem.id,
+      phanHoi: content,
+      loaiXuLy: curReplyType,
+      replyFileUrls: fileUrls.join('\n')
+    });
+    
+    if (r.success) {
+      toast(curReplyType === 'forward' ? '📤 Đã chuyển cơ quan chức năng!' : '✅ Đã gửi phản hồi cho cư dân!');
+      document.getElementById('modal').classList.remove('show');
+      document.getElementById('mReplyForm').style.display = 'none';
+      replyFiles = [];
+      renderReplyFileList();
+      showReplyProgress(false);
+      await loadList();
+    } else {
+      toast('Lỗi: ' + (r.error || ''), true);
+    }
+  } catch(e) {
+    toast('Lỗi kết nối', true);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = oldHtml;
+    showReplyProgress(false);
+  }
+});
+
+// === EVENT: Nút "Phản hồi" cho forward ===
+document.getElementById('mBtnForwardReply').addEventListener('click', () => {
+  if (!curItem) return;
+  const form = document.getElementById('mForwardReplyForm');
+  const opening = form.style.display === 'none';
+  if (opening) {
+    document.getElementById('mForwardReplyText').value = '';
+    forwardReplyFiles = [];
+    renderForwardReplyFileList();
+    showForwardReplyProgress(false);
+    form.style.display = 'block';
+    document.getElementById('mReplyForm').style.display = 'none';
+    document.getElementById('mReplyViewRow').style.display = 'none';
+  } else {
+    form.style.display = 'none';
+    resetReplyUI(curItem);
+  }
+});
+
+document.getElementById('mBtnCancelForwardReply').addEventListener('click', () => {
+  document.getElementById('mForwardReplyForm').style.display = 'none';
+  forwardReplyFiles = [];
+  renderForwardReplyFileList();
+  showForwardReplyProgress(false);
+  if (curItem) resetReplyUI(curItem);
+});
+
+// === EVENT: Submit forward reply ===
+document.getElementById('mBtnSubmitForwardReply').addEventListener('click', async () => {
+  if (!curItem) return;
+  
+  const content = document.getElementById('mForwardReplyText').value.trim();
+  if (!content) {
+    toast('⚠ Vui lòng nhập nội dung phản hồi', true);
+    return;
+  }
+  
+  const btn = document.getElementById('mBtnSubmitForwardReply');
+  const oldHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi…';
+  showForwardReplyProgress(true);
+  
+  try {
+    let fileUrls = [];
+    if (forwardReplyFiles.length > 0) {
+      fileUrls = await uploadForwardReplyFilesFn(curItem.id, forwardReplyFiles);
+    }
+    
+    const payload = {
+      action: 'forwardReply',
+      id: curItem.id,
+      phanHoi: content,
+      replyFileUrls: fileUrls.join('\n')
+    };
+    
+    const r = await apiPost(payload);
+    if (r.success) {
+      toast('✅ Đã gửi phản hồi về việc chuyển cơ quan!');
+      document.getElementById('modal').classList.remove('show');
+      document.getElementById('mForwardReplyForm').style.display = 'none';
+      forwardReplyFiles = [];
+      renderForwardReplyFileList();
+      showForwardReplyProgress(false);
+      await loadList();
+    } else {
+      toast('Lỗi: ' + (r.error || ''), true);
+    }
+  } catch(e) {
+    toast('Lỗi kết nối', true);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = oldHtml;
+    showForwardReplyProgress(false);
+  }
+});
+
+// === Xoá ===
+document.getElementById('mBtnDelete').addEventListener('click', async () => {
+  if (!curItem) return;
+  const ok = await showConfirm({
+    title: 'Xác nhận xoá ý kiến',
+    msg: `Xoá ý kiến của <span class="confirm-name">"${escH(curItem.hoTen)}"</span>?<br><small style="color:#999">Thao tác này không thể hoàn tác.</small>`,
+    icon: '🗑️', okLabel: 'Xoá'
+  });
+  if (!ok) return;
+  try {
+    const r = await apiPost({ action:'delete', id:curItem.id });
+    if (r.success) {
+      toast('Đã xoá ý kiến!');
+      document.getElementById('modal').classList.remove('show');
+      await loadList();
+    } else toast('Lỗi xoá: ' + (r.error || ''), true);
+  } catch(e) { toast('Lỗi kết nối', true); }
+});
+
+// === Đóng modal ===
+document.getElementById('modalClose').addEventListener('click', () => {
+  document.getElementById('modal').classList.remove('show');
+});
+document.getElementById('modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal'))
+    document.getElementById('modal').classList.remove('show');
+});
+
+// ============================================================
+//  CONFIRM DIALOG
+// ============================================================
+function showConfirm({ title, msg, icon = '⚠️', okLabel = 'Xác nhận xoá' }) {
+  return new Promise(res => {
+    document.getElementById('confirmIcon').textContent = icon;
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMsg').innerHTML = msg;
+    document.getElementById('confirmOk').textContent = okLabel;
+    const ov = document.getElementById('confirmOverlay');
+    ov.classList.add('show');
+    const ok  = document.getElementById('confirmOk');
+    const can = document.getElementById('confirmCancel');
+    const cleanup = () => { ov.classList.remove('show'); ok.onclick = null; can.onclick = null; };
+    ok.onclick  = () => { cleanup(); res(true);  };
+    can.onclick = () => { cleanup(); res(false); };
+  });
+}
+
+// ============================================================
+//  AUTO REFRESH
+// ============================================================
+setInterval(() => {
+  if (document.getElementById('adminPanel').classList.contains('show')) {
+    // Lưu lại vị trí trang hiện tại và filter
+    const currentFilter = curFilter;
+    loadList().then(() => {
+      // Giữ nguyên filter sau khi refresh
+      curFilter = currentFilter;
+    });
+  }
+}, 30000);
+</script>
+</body>
+</html>
