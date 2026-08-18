@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Quản trị — Ý kiến cử tri phường Thanh Khê</title>
+  <meta name="theme-color" content="#0EA5E9">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="icon.png" type="image/png">
+  <!-- Thư viện tạo file Word (.docx) -->
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.min.js"></script>
+  <style>
+    /* ===== GIỮ NGUYÊN TOÀN BỘ CSS ===== */
+    :root {
+      --sky-vivid:   #0EA5E9;
+      --sky-bright:  #0D9488;
+      --sky:         #0F766E;
+      --sky-deep:    #065F46;
+      --sky-light:   #5EEAD4;
+      --sky-pale:    #99F6E4;
+      --nav-bg:      #E0F7F4;
+      --nav-active:  #0D9488;
+      --accent:      #F59E0B;
+      --red:         #DC2626;
+      --red-light:   #FFEEEE;
+      --surface:     #FFFFFF;
+      --bg:          #F0FBFA;
+      --bg2:         #DFF5F0;
+      --text:        #0B1F1C;
+      --text2:       #2F6B63;
+      --border:      #7DD3C0;
+      --border-soft: #C7ECE3;
+      --radius-xl:   20px;
+      --radius-lg:   14px;
+      --radius-md:   10px;
+      --shadow:      0 4px 20px rgba(13,148,136,.13);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--text);
+    }
+    /* ========== LOGIN ========== */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      background: linear-gradient(145deg, #0EA5E9 0%, #0F766E 45%, #065F46 100%);
+      position: relative; overflow: hidden;
+    }
+    #loginScreen::before {
+      content: ''; position: absolute;
+      top: -80px; right: -60px;
+      width: 280px; height: 280px;
+      border-radius: 50%; background: rgba(255,255,255,.07);
+    }
+    #loginScreen::after {
+      content: ''; position: absolute;
+      bottom: -50px; left: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%; background: rgba(255,255,255,.05);
+    }
+    .login-card {
+      background: #fff; border-radius: var(--radius-xl);
+      padding: 30px 22px; width: 100%; max-width: 380px;
+      box-shadow: 0 12px 48px rgba(0,0,0,.18); text-align: center;
+      position: relative; z-index: 1;
+    }
+    .login-logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 10px;
+  border-radius: 0;
+  overflow: visible;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-logo img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  display: block;
+}
+    .login-title { font-size: 1.3rem; font-weight: 800; color: var(--sky-deep); margin-bottom: 3px; }
+    .login-sub   { font-size: .78rem; color: var(--text2); margin-bottom: 26px; }
+    .pw-wrap { position: relative; margin-bottom: 14px; }
+    .pw-wrap input {
+      width: 100%; padding: 12px 44px 12px 16px;
+      border: 1.5px solid var(--border); border-radius: var(--radius-lg);
+      font-size: .93rem; font-family: inherit; color: var(--text);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .pw-wrap input:focus { outline:none; border-color:var(--sky-vivid); box-shadow:0 0 0 3px rgba(14,165,233,.14); }
+    .pw-eye {
+      position:absolute; right:14px; top:50%; transform:translateY(-50%);
+      cursor:pointer; color:var(--text2); font-size:1rem;
+    }
+    .btn-login {
+      width:100%; padding:13px;
+      background: linear-gradient(135deg, var(--sky-vivid), var(--sky-deep));
+      color:#fff; border:none; border-radius:var(--radius-lg);
+      font-size:.93rem; font-weight:700; font-family:inherit;
+      cursor:pointer; box-shadow:0 4px 16px rgba(14,165,233,.35);
+      transition: transform .15s;
+    }
+    .btn-login:active { transform:scale(.98); }
+    .login-error { color:var(--red); font-size:.81rem; font-weight:600; margin-top:10px; display:none; }
+    .back-link {
+      display:inline-flex; align-items:center; gap:5px;
+      color:var(--text2); font-size:.79rem; font-weight:600;
+      cursor:pointer; margin-top:14px; padding:6px 12px;
+      border-radius:30px; transition:background .2s;
+    }
+    .back-link:hover { background:var(--bg2); color:var(--sky); }
+
+    /* ========== ADMIN PANEL ========== */
+    #adminPanel { display:none; padding-bottom:72px; }
+    #adminPanel.show { display:block; }
+
+    /* ========== HEADER ========== */
+    .app-header {
+      background: linear-gradient(135deg, #0EA5E9 0%, #0F766E 55%, #065F46 100%);
+      padding: 12px 16px 12px; position:relative; overflow:hidden;
+    }
+    .app-header::before {
+      content:''; position:absolute; top:-60px; right:-40px;
+      width:180px; height:180px; border-radius:50%;
+      background:rgba(255,255,255,.08);
+    }
+    .header-row { display:flex; align-items:center; justify-content:space-between; position:relative; }
+    .header-left { display:flex; align-items:center; gap:10px; }
+    .header-icon  { width: 38px; height: 38px; object-fit: contain; border-radius: 10px; }
+    .header-title { font-size:1.1rem; font-weight:800; color:#fff; }
+    .header-sub   { font-size:.68rem; color:rgba(255,255,255,.72); margin-top:1px; }
+    .btn-logout {
+      background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28);
+      color:#fff; padding:7px 13px; border-radius:30px;
+      font-size:.74rem; font-weight:600; font-family:inherit; cursor:pointer;
+      transition: background .2s;
+    }
+    .btn-logout:hover { background:rgba(255,255,255,.26); }
+    .stats-row {
+      display:flex; gap:8px; margin-top:10px; position:relative;
+    }
+    .stat-chip {
+      flex:1; background:rgba(255,255,255,.15); border-radius:12px;
+      padding:8px 10px; text-align:center;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .stat-num  { font-size:1.35rem; font-weight:800; color:#fff; line-height:1; }
+    .stat-lbl  { font-size:.62rem; color:rgba(255,255,255,.75); font-weight:600; margin-top:2px; }
+
+    /* ========== CONTENT ========== */
+    .content-area { padding: 12px; }
+
+    .section-block {
+      background:#fff; border:1.5px solid var(--border-soft); border-radius:var(--radius-lg);
+      padding:14px; margin-bottom:14px;
+    }
+    .section-heading {
+      font-size:.86rem; font-weight:800; color:var(--sky-deep);
+      display:flex; align-items:center; gap:7px; margin-bottom:10px;
+    }
+    .section-desc { font-size:.76rem; color:var(--text2); margin-bottom:10px; line-height:1.5; }
+
+    /* ========== VĂN BẢN TRẢ LỜI CHUNG ========== */
+    .reply-status-card {
+      display:flex; align-items:center; gap:10px;
+      border-radius:var(--radius-md); padding:12px;
+      margin-bottom:10px;
+    }
+    .reply-status-card.pending { background:#FFF8E1; border:1.5px solid #FDE68A; }
+    .reply-status-card.done    { background:linear-gradient(135deg,#DCFCE7,#EAFBF3); border:1.5px solid #86EFAC; }
+    .reply-status-icon { font-size:1.6rem; flex-shrink:0; }
+    .reply-status-text { flex:1; min-width:0; }
+    .reply-status-title { font-size:.85rem; font-weight:700; color:var(--text); }
+    .reply-status-sub   { font-size:.73rem; color:var(--text2); margin-top:2px; word-break:break-word; }
+
+    .reply-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .btn-pill {
+      display:inline-flex; align-items:center; gap:6px;
+      border:none; border-radius:30px; padding:9px 15px;
+      font-size:.78rem; font-weight:700; font-family:inherit; cursor:pointer;
+      transition: transform .15s, opacity .2s;
+    }
+    .btn-pill:active { transform:scale(.97); }
+    .btn-pill:disabled { opacity:.6; cursor:not-allowed; }
+    .btn-pill.view   { background:linear-gradient(135deg, var(--sky-deep), var(--sky-vivid)); color:#fff; }
+    .btn-pill.danger { background:var(--red-light); color:var(--red); }
+    .btn-pill.upload { background:linear-gradient(135deg, var(--sky-vivid), var(--sky-deep)); color:#fff; box-shadow:0 4px 14px rgba(14,165,233,.3); }
+
+    /* ========== EXPORT BUTTON ========== */
+    .export-row { display: flex; align-items: center; justify-content: center; }
+    .btn-export-all {
+      display:inline-flex; align-items:center; gap:7px;
+      background: linear-gradient(135deg, var(--sky-deep), var(--sky-vivid));
+      color:#fff; border:none; border-radius:30px;
+      padding:9px 16px; font-size:.78rem; font-weight:700; font-family:inherit;
+      cursor:pointer; box-shadow:0 4px 14px rgba(14,165,233,.3);
+      transition: transform .15s, opacity .2s; width:100%; justify-content:center;
+    }
+    .btn-export-all:active { transform:scale(.97); }
+    .btn-export-all:disabled { opacity:.65; cursor:not-allowed; }
+
+    /* ========== FIELD INPUT ========== */
+    .field-input {
+      width:100%; padding:11px 13px;
+      border:1.5px solid var(--border); border-radius:var(--radius-lg);
+      font-size:.88rem; font-family:inherit; background:#fff; color:var(--text);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .field-input:focus { outline:none; border-color:var(--sky-vivid); box-shadow:0 0 0 3px rgba(14,165,233,.14); }
+
+    /* ========== TOGGLE SWITCH ========== */
+    .lock-toggle-row { display:flex; align-items:center; gap:10px; margin-top:14px; }
+    .switch { position:relative; display:inline-block; width:44px; height:25px; flex-shrink:0; }
+    .switch input { opacity:0; width:0; height:0; }
+    .switch .slider {
+      position:absolute; cursor:pointer; inset:0;
+      background:#ccc; border-radius:30px; transition:.2s;
+    }
+    .switch .slider::before {
+      content:''; position:absolute; height:19px; width:19px; left:3px; bottom:3px;
+      background:#fff; border-radius:50%; transition:.2s;
+      box-shadow:0 1px 3px rgba(0,0,0,.3);
+    }
+    .switch input:checked + .slider { background: var(--red); }
+    .switch input:checked + .slider::before { transform: translateX(19px); }
+    .lock-toggle-label { font-size:.83rem; font-weight:600; color:var(--text); }
+
+    /* ========== UPLOAD ZONE ========== */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--sky-vivid);
+      background: rgba(14,165,233,.04);
+    }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-icon { font-size: 1.5rem; color: var(--sky-pale); margin-bottom: 4px; }
+    .upload-text { font-size: .78rem; color: var(--text2); }
+    .upload-text strong { color: var(--sky); }
+    .upload-progress {
+      margin-top: 8px;
+      height: 4px;
+      background: var(--border-soft);
+      border-radius: 2px;
+      overflow: hidden;
+      display: none;
+    }
+    .upload-progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--sky-vivid), var(--sky-light));
+      transition: width .3s;
+    }
+
+    /* ========== LIST ITEM ========== */
+    .pa-compact {
+      display:flex; align-items:center; justify-content:space-between;
+      gap:8px; border:1.5px solid var(--border-soft); border-radius:var(--radius-lg);
+      padding:11px 13px; margin-bottom:8px;
+      background:#fff; transition: border-color .2s, box-shadow .2s;
+    }
+    .pa-compact:hover  { border-color:var(--sky-vivid); box-shadow:0 4px 14px rgba(14,165,233,.12); }
+    .pa-compact-info { display:flex; align-items:center; gap:10px; min-width:0; flex:1; cursor:pointer; }
+    .pa-compact-icon { font-size:1.15rem; flex-shrink:0; }
+    .pa-compact-text { min-width:0; flex:1; }
+    .pa-compact-name {
+      font-weight:700; font-size:.87rem; color:var(--sky-deep);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .pa-compact-sub { font-size:.7rem; color:var(--text2); margin-top:2px; }
+    .pa-compact-link {
+      flex-shrink:0; color:var(--sky-vivid); font-size:1rem; padding:6px;
+      cursor:pointer; border-radius:50%; transition:background .2s;
+    }
+    .pa-compact-link:hover { background:var(--bg2); }
+    .pa-compact-link.disabled { color:#ccc; pointer-events:none; }
+
+    .empty-state {
+      text-align:center; padding:52px 20px; color:var(--text2);
+    }
+    .empty-state i { font-size:2.4rem; display:block; margin-bottom:12px; opacity:.3; color: var(--sky-vivid); }
+
+    /* ========== MODAL ========== */
+    .modal-overlay {
+      position:fixed; inset:0; background:rgba(13,31,60,.55);
+      z-index:800; display:none; align-items:center; justify-content:center;
+      padding:20px;
+    }
+    .modal-overlay.show { display:flex; }
+    .modal-sheet {
+      background:#fff; border-radius:var(--radius-xl);
+      width:100%; max-width:440px; max-height:85vh; overflow-y:auto;
+      padding:0 20px 22px; animation:popIn .22s ease;
+      box-shadow:0 20px 60px rgba(0,0,0,.35);
+      position:relative;
+    }
+    @keyframes popIn { from{transform:scale(.93);opacity:0} to{transform:scale(1);opacity:1} }
+    .modal-header {
+      display:flex; justify-content:space-between; align-items:center;
+      position:sticky; top:0; background:#fff; z-index:2;
+      padding:18px 0 12px; margin-bottom:10px;
+      border-bottom:1px solid var(--border-soft);
+    }
+    .modal-title { font-size:1rem; font-weight:800; color:var(--sky-deep); }
+    .modal-close {
+      background:var(--red); border:2px solid #B91C1C; font-size:1.3rem; width:42px; height:42px;
+      border-radius:50%; color:#fff; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition: transform .15s, background .2s;
+      flex-shrink:0; box-shadow:0 4px 16px rgba(220,38,38,.5);
+      font-weight:700; line-height:1;
+    }
+    .modal-close:hover { background:#B91C1C; transform:scale(1.05); }
+    .modal-close:active { transform:scale(.9); }
+    .modal-close i { font-size:1.2rem; }
+    .detail-row { margin-bottom:12px; }
+    .detail-lbl { font-size:.66rem; font-weight:700; text-transform:uppercase; color:var(--sky); margin-bottom:3px; letter-spacing:.4px; }
+    .detail-val { font-size:.88rem; color:var(--text); line-height:1.6; white-space:pre-wrap; }
+
+    .modal-actions {
+      display:flex; gap:10px; margin-top:16px;
+      flex-wrap:wrap;
+    }
+    .mact-btn {
+      flex:1; padding:12px; border:none; border-radius:var(--radius-lg);
+      font-size:.86rem; font-weight:700; font-family:inherit; cursor:pointer;
+      transition: transform .15s; min-width:70px;
+    }
+    .mact-btn:active { transform:scale(.97); }
+    .mact-btn.del      { background:#FFEEEE; color:var(--red); }
+    .mact-btn.doc-link { background:#DFF5F0; color:#065F46; }
+
+    /* ========== CONFIRM DIALOG ========== */
+    .confirm-overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,.5);
+      z-index:900; display:none; align-items:center; justify-content:center; padding:24px;
+    }
+    .confirm-overlay.show { display:flex; }
+    .confirm-box {
+      background:#fff; border-radius:var(--radius-xl);
+      width:100%; max-width:340px; padding:24px 20px; text-align:center;
+    }
+    .confirm-icon { font-size:2rem; margin-bottom:8px; }
+    .confirm-title { font-size:1rem; font-weight:800; color:var(--text); margin-bottom:8px; }
+    .confirm-msg   { font-size:.83rem; color:var(--text2); line-height:1.55; margin-bottom:20px; }
+    .confirm-name  { color:var(--sky-deep); font-weight:700; }
+    .confirm-btns  { display:flex; gap:10px; }
+    .confirm-btns button {
+      flex:1; padding:12px; border:none; border-radius:var(--radius-lg);
+      font-size:.87rem; font-weight:700; font-family:inherit; cursor:pointer;
+    }
+    #confirmOk     { background:var(--red); color:#fff; }
+    #confirmCancel { background:#F5F5F5; color:var(--text); }
+
+    /* ========== BOTTOM NAV ========== */
+    .bottom-nav {
+      position:fixed; bottom:0; left:0; right:0;
+      background: var(--nav-bg);
+      border-top: 1.5px solid var(--sky-pale);
+      display:flex; z-index:500;
+      box-shadow: 0 -4px 20px rgba(13,148,136,.13);
+      padding-bottom:env(safe-area-inset-bottom);
+    }
+    .nav-item {
+      flex:1; display:flex; flex-direction:column; align-items:center;
+      padding:9px 2px 7px; cursor:pointer;
+      font-size:.6rem; font-weight:700; color:#4E9A90;
+      text-transform:uppercase; letter-spacing:.3px;
+      transition:color .2s;
+    }
+    .nav-item i { font-size:1.1rem; margin-bottom:3px; }
+
+    /* ========== TOAST ========== */
+    #toast {
+      position:fixed; bottom:82px; left:50%; transform:translateX(-50%) translateY(20px);
+      background:#0F2E2A; color:#fff; padding:11px 20px; border-radius:30px;
+      font-size:.84rem; font-weight:600; opacity:0; transition:.3s;
+      z-index:999; white-space:nowrap; pointer-events:none; max-width:90%;
+    }
+    #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+    #toast.error { background:var(--red); }
+
+    .loading-state {
+      text-align:center; padding:40px 20px; color:var(--text2);
+    }
+    .loading-state i { margin-right:6px; color: var(--sky-vivid); }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="icon.png" alt="Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.8em%22 font-size=%2290%22%3E🔐%3C/text%3E%3C/svg%3E'">
+    </div>
+    <div class="login-title">Quản trị hệ thống</div>
+    <div class="login-sub">Ý kiến cử tri — UBMT/TQVN Phường Thanh Khê</div>
+    <div class="pw-wrap">
+      <input type="password" id="pwInput" placeholder="Nhập mật khẩu quản trị" autocomplete="current-password">
+      <span class="pw-eye" id="pwEye"><i class="fas fa-eye-slash"></i></span>
+    </div>
+    <button class="btn-login" id="btnLogin"><i class="fas fa-sign-in-alt"></i>&ensp;Đăng nhập</button>
+    <div class="login-error" id="loginError">❌ Mật khẩu không đúng</div>
+    <div class="back-link" id="backToHome"><i class="fas fa-arrow-left"></i> Quay lại trang chủ</div>
+  </div>
+</div>
+
+<!-- ===== ADMIN PANEL ===== -->
+<div id="adminPanel">
+
+  <!-- Header -->
+  <div class="app-header">
+    <div class="header-row">
+      <div class="header-left">
+        <img src="icon.png" class="header-icon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.8em%22 font-size=%2290%22%3E🛡️%3C/text%3E%3C/svg%3E'" alt="logo">
+        <div>
+          <div class="header-title">Quản trị</div>
+          <div class="header-sub">UBMT/TQVN Phường Thanh Khê</div>
+        </div>
+      </div>
+      <button class="btn-logout" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Thoát</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat-chip"><div class="stat-num" id="statTotal">—</div><div class="stat-lbl">Tổng ý kiến</div></div>
+      <div class="stat-chip"><div class="stat-num" id="statToday">—</div><div class="stat-lbl">Hôm nay</div></div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content-area">
+
+    <!-- ===== KHOÁ FORM NHẬP Ý KIẾN ===== -->
+    <div class="section-block">
+      <div class="section-heading"><i class="fas fa-lock"></i> Khoá form nhập ý kiến</div>
+      <div class="section-desc">Đặt thời điểm tự động khoá form nhập của cử tri. Khi khoá, cử tri sẽ thấy thông báo tạm dừng thay vì form. Muốn mở lại: tắt công tắc bên dưới.</div>
+
+      <div id="formLockStatusCard">
+        <div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>
+      </div>
+
+      <div class="form-group" style="margin-top:12px">
+        <div class="section-heading" style="font-size:.72rem;margin-bottom:6px"><i class="fas fa-calendar-clock"></i> Tạm khoá từ</div>
+        <input type="datetime-local" id="lockFromInput" class="field-input">
+        <div style="margin-top:5px;font-size:.72rem;color:var(--text2)"><i class="fas fa-info-circle" style="color:var(--sky-vivid)"></i> Để trống = khoá ngay lập tức khi bật công tắc</div>
+      </div>
+
+      <div class="lock-toggle-row">
+        <label class="switch">
+          <input type="checkbox" id="lockEnabledToggle">
+          <span class="slider"></span>
+        </label>
+        <span class="lock-toggle-label" id="lockToggleLabel">Bật khoá form theo lịch trên</span>
+      </div>
+
+      <div class="export-row" style="margin-top:14px">
+        <button class="btn-export-all" id="btnSaveFormLock"><i class="fas fa-save"></i> Lưu cài đặt khoá form</button>
+      </div>
+    </div>
+
+    <!-- ===== VĂN BẢN TRẢ LỜI CHUNG (TỔNG HỢP THEO ĐỢT) ===== -->
+    <div class="section-block">
+      <div class="section-heading"><i class="fas fa-file-circle-check"></i> Văn bản trả lời (tổng hợp theo đợt)</div>
+      <div class="section-desc">Cuối đợt, tổng hợp toàn bộ ý kiến và tải lên MỘT tệp văn bản trả lời (.docx hoặc .pdf). Cử tri sẽ xem được tệp này ở mục "Kết quả trả lời".</div>
+
+      <div id="replyStatusCard">
+        <div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>
+      </div>
+
+      <div class="upload-zone" id="batchReplyUploadZone">
+        <input type="file" id="batchReplyFileInput" accept=".pdf,.doc,.docx">
+        <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+        <div class="upload-text">
+          <strong>Chọn tệp văn bản trả lời</strong><br>
+          Chỉ hỗ trợ: DOC, DOCX, PDF — tệp mới sẽ thay thế tệp cũ
+        </div>
+      </div>
+      <div class="upload-progress" id="batchReplyProgress">
+        <div class="upload-progress-bar" id="batchReplyProgressBar"></div>
+      </div>
+    </div>
+
+    <!-- ===== XUẤT TỔNG HỢP Ý KIẾN ===== -->
+    <div class="section-block">
+      <div class="section-heading"><i class="fas fa-file-word"></i> Tổng hợp ý kiến cử tri</div>
+      <div class="section-desc">Xuất toàn bộ ý kiến hiện có ra tệp Word để soạn văn bản trả lời, sau đó tải lên ở mục phía trên.</div>
+      <div class="export-row">
+        <button class="btn-export-all" id="btnExportAll"><i class="fas fa-file-word"></i> Xuất tất cả ý kiến (.docx)</button>
+      </div>
+    </div>
+
+    <!-- ===== DANH SÁCH Ý KIẾN — THỐNG KÊ ===== -->
+    <div class="section-block">
+      <div class="section-heading"><i class="fas fa-list"></i> Danh sách ý kiến — người gửi &amp; tệp</div>
+      <div id="paList">
+        <div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== MODAL CHI TIẾT ===== -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <div class="modal-title">Chi tiết ý kiến</div>
+      <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="detail-row"><div class="detail-lbl">Họ và tên (người gửi)</div><div class="detail-val" id="mHoTen"></div></div>
+    <div class="detail-row"><div class="detail-lbl">Địa chỉ / SĐT</div><div class="detail-val" id="mDiaChi"></div></div>
+    <div class="detail-row"><div class="detail-lbl">Ngày gửi</div><div class="detail-val" id="mTime"></div></div>
+    <div class="detail-row"><div class="detail-lbl">Nội dung ý kiến</div><div class="detail-val" id="mNoiDung"></div></div>
+    <div class="detail-row" id="mAttachRow" style="display:none">
+      <div class="detail-lbl">Tệp đính kèm của cử tri</div>
+      <div class="detail-val" id="mAttach"></div>
+    </div>
+    <div class="detail-row" id="mTxtRow" style="display:none">
+      <div class="detail-lbl">Link truy cập tệp ý kiến (gộp theo tháng)</div>
+      <div class="detail-val" id="mTxt"></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="mact-btn del" id="mBtnDelete"><i class="fas fa-trash"></i> Xoá</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONFIRM DIALOG ===== -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-icon" id="confirmIcon">⚠️</div>
+    <div class="confirm-title" id="confirmTitle"></div>
+    <div class="confirm-msg" id="confirmMsg"></div>
+    <div class="confirm-btns">
+      <button id="confirmCancel">Huỷ</button>
+      <button id="confirmOk">Xác nhận</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" id="adminNav" style="display:none">
+  <div class="nav-item" data-filter="home">
+    <i class="fas fa-home"></i>Trang chủ
+  </div>
+</nav>
+
+<div id="toast"></div>
+
+<script>
+// ============================================================
+//  CẤU HÌNH API PROXY
+// ============================================================
+const API_URL = '/api/proxy';
+let adminPassword = null;
+
+// ============================================================
+//  HELPERS
+// ============================================================
+function toast(msg, isErr = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show' + (isErr ? ' error' : '');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.className = '', 3000);
+}
+function escH(s) {
+  if (s === null || s === undefined || s === '') return '';
+  return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+function fmtDate(ts) {
+  try { return new Date(ts).toLocaleString('vi-VN'); } catch { return ts || ''; }
+}
+function isToday(ts) {
+  try {
+    const d = new Date(ts), n = new Date();
+    return d.getFullYear() === n.getFullYear() && d.getMonth() === n.getMonth() && d.getDate() === n.getDate();
+  } catch { return false; }
+}
+
+// ============================================================
+//  CONFIRM DIALOG
+// ============================================================
+function showConfirm({ title, msg, icon = '⚠️', okLabel = 'Xác nhận xoá' }) {
+  return new Promise(res => {
+    document.getElementById('confirmIcon').textContent = icon;
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMsg').innerHTML = msg;
+    document.getElementById('confirmOk').textContent = okLabel;
+    const ov = document.getElementById('confirmOverlay');
+    ov.classList.add('show');
+    const ok  = document.getElementById('confirmOk');
+    const can = document.getElementById('confirmCancel');
+    const cleanup = () => { ov.classList.remove('show'); ok.onclick = null; can.onclick = null; };
+    ok.onclick  = () => { cleanup(); res(true);  };
+    can.onclick = () => { cleanup(); res(false); };
+  });
+}
+
+// ============================================================
+//  FILE TO BASE64
+// ============================================================
+async function fileToBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = () => rej(new Error('Đọc file thất bại'));
+    r.readAsDataURL(file);
+  });
+}
+
+// ============================================================
+//  LOGIN
+// ============================================================
+const pwInput = document.getElementById('pwInput');
+const pwEye   = document.getElementById('pwEye');
+
+pwEye.addEventListener('click', () => {
+  const show = pwInput.type === 'password';
+  pwInput.type = show ? 'text' : 'password';
+  pwEye.innerHTML = `<i class="fas fa-eye${show ? '' : '-slash'}"></i>`;
+});
+
+document.getElementById('btnLogin').addEventListener('click', doLogin);
+pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+async function doLogin() {
+  const pw = pwInput.value;
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'verify', password: pw })
+    });
+    const json = await res.json();
+    if (json.success) {
+      adminPassword = pw;
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminPanel').classList.add('show');
+      document.getElementById('adminNav').style.display = 'flex';
+      loadList();
+      loadReplyStatus();
+      loadFormLockStatus();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+      pwInput.value = '';
+    }
+  } catch(e) {
+    document.getElementById('loginError').style.display = 'block';
+    pwInput.value = '';
+  }
+}
+
+document.getElementById('backToHome').addEventListener('click', () => {
+  window.location.href = '/';
+});
+document.getElementById('btnLogout').addEventListener('click', () => {
+  document.getElementById('adminPanel').classList.remove('show');
+  document.getElementById('adminNav').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  pwInput.value = '';
+  adminPassword = null;
+});
+document.querySelector('.nav-item[data-filter="home"]').addEventListener('click', () => {
+  window.location.href = '/';
+});
+
+// ============================================================
+//  API GỌI PROXY
+// ============================================================
+async function apiPost(body, requireAuth = false) {
+  if (requireAuth && adminPassword) {
+    body.adminPassword = adminPassword;
+  }
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  return res.json();
+}
+
+// ============================================================
+//  DATA
+// ============================================================
+let allData = [];
+let curItem = null;
+
+async function loadList(silent = false) {
+  const box = document.getElementById('paList');
+  if (!silent) {
+    box.innerHTML = `<div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>`;
+  }
+  try {
+    const json = await apiPost({ action: 'get' });
+    if (!json.success) throw new Error(json.error || 'Lỗi server');
+    allData = json.data || [];
+
+    document.getElementById('statTotal').textContent = allData.length;
+    document.getElementById('statToday').textContent = allData.filter(r => isToday(r.timestamp)).length;
+
+    const sorted = [...allData].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    if (!sorted.length) {
+      box.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i>Chưa có ý kiến nào</div>`;
+      return;
+    }
+
+    box.innerHTML = sorted.map(item => {
+      const hasLink = !!(item.txtUrl || item.attachUrl);
+      const linkUrl = item.txtUrl || (item.attachUrl ? item.attachUrl.split('\n')[0] : '');
+      return `
+      <div class="pa-compact" data-id="${escH(item.id)}">
+        <div class="pa-compact-info" data-open="${escH(item.id)}">
+          <span class="pa-compact-icon">🧑</span>
+          <div class="pa-compact-text">
+            <div class="pa-compact-name">${escH(item.hoTen)}</div>
+            <div class="pa-compact-sub">${fmtDate(item.timestamp)}${item.diaChi ? ' · ' + escH(item.diaChi) : ''}</div>
+          </div>
+        </div>
+        <span class="pa-compact-link ${hasLink ? '' : 'disabled'}" data-link="${escH(linkUrl)}" title="Xem tệp ý kiến">
+          <i class="fas fa-arrow-up-right-from-square"></i>
+        </span>
+      </div>`;
+    }).join('');
+
+    box.querySelectorAll('.pa-compact-info').forEach(el => {
+      el.addEventListener('click', () => {
+        const item = allData.find(r => r.id === el.dataset.open);
+        if (item) openModal(item);
+      });
+    });
+    box.querySelectorAll('.pa-compact-link').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const url = el.dataset.link;
+        if (url) window.open(url, '_blank');
+      });
+    });
+  } catch(err) {
+    box.innerHTML = `<div class="empty-state" style="color:var(--red)"><i class="fas fa-exclamation-triangle"></i>Lỗi: ${escH(err.message)}</div>`;
+  }
+}
+
+// ============================================================
+//  MODAL CHI TIẾT (chỉ xem + xoá)
+// ============================================================
+function openModal(item) {
+  curItem = item;
+  document.getElementById('mHoTen').textContent  = item.hoTen   || '';
+  document.getElementById('mDiaChi').textContent = item.diaChi  || '(Không có)';
+  document.getElementById('mTime').textContent    = fmtDate(item.timestamp);
+  document.getElementById('mNoiDung').textContent = item.noiDung || '(Không có nội dung)';
+
+  if (item.attachUrl) {
+    document.getElementById('mAttachRow').style.display = 'block';
+    document.getElementById('mAttach').innerHTML =
+      item.attachUrl.split('\n').filter(Boolean).map(u => `<a href="${escH(u)}" target="_blank" style="color:var(--sky);display:block;margin-bottom:4px;font-size:.82rem">${escH(u)}</a>`).join('');
+  } else {
+    document.getElementById('mAttachRow').style.display = 'none';
+  }
+
+  if (item.txtUrl) {
+    document.getElementById('mTxtRow').style.display = 'block';
+    document.getElementById('mTxt').innerHTML = `<a href="${escH(item.txtUrl)}" target="_blank" style="color:var(--sky)">${escH(item.txtUrl)}</a>`;
+  } else {
+    document.getElementById('mTxtRow').style.display = 'none';
+  }
+
+  document.getElementById('modal').classList.add('show');
+}
+
+document.getElementById('mBtnDelete').addEventListener('click', async () => {
+  if (!curItem) return;
+  const ok = await showConfirm({
+    title: 'Xác nhận xoá ý kiến',
+    msg: `Xoá ý kiến của <span class="confirm-name">"${escH(curItem.hoTen)}"</span>?<br><small style="color:#999">Thao tác này không thể hoàn tác.</small>`,
+    icon: '🗑️', okLabel: 'Xoá'
+  });
+  if (!ok) return;
+  try {
+    const r = await apiPost({ action: 'delete', id: curItem.id }, true);
+    if (r.success) {
+      toast('Đã xoá ý kiến!');
+      document.getElementById('modal').classList.remove('show');
+      await loadList();
+    } else toast('Lỗi xoá: ' + (r.error || ''), true);
+  } catch(e) { toast('Lỗi kết nối', true); }
+});
+
+document.getElementById('modalClose').addEventListener('click', () => {
+  document.getElementById('modal').classList.remove('show');
+});
+document.getElementById('modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal'))
+    document.getElementById('modal').classList.remove('show');
+});
+
+// ============================================================
+//  VĂN BẢN TRẢ LỜI CHUNG (TỔNG HỢP THEO ĐỢT)
+// ============================================================
+async function loadReplyStatus(silent = false) {
+  const card = document.getElementById('replyStatusCard');
+  if (!silent) {
+    card.innerHTML = `<div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>`;
+  }
+  try {
+    const res = await fetch(API_URL + '?action=getReplyStatus&t=' + Date.now());
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error || 'Lỗi server');
+    renderReplyStatus(json);
+  } catch (e) {
+    card.innerHTML = `<div class="reply-status-card pending"><span class="reply-status-icon">⚠️</span><div class="reply-status-text"><div class="reply-status-title">Không tải được trạng thái</div><div class="reply-status-sub">${escH(e.message)}</div></div></div>`;
+  }
+}
+
+function renderReplyStatus(status) {
+  const card = document.getElementById('replyStatusCard');
+  if (status.hasReply) {
+    card.innerHTML = `
+      <div class="reply-status-card done">
+        <span class="reply-status-icon">✅</span>
+        <div class="reply-status-text">
+          <div class="reply-status-title">Đã tải lên văn bản trả lời</div>
+          <div class="reply-status-sub">${escH(status.fileName || '')} · ${fmtDate(status.uploadedAt)}</div>
+        </div>
+      </div>
+      <div class="reply-actions">
+        <button class="btn-pill view" id="btnViewReply"><i class="fas fa-eye"></i> Xem tệp</button>
+        <button class="btn-pill danger" id="btnDeleteReply"><i class="fas fa-trash"></i> Xoá tệp</button>
+      </div>`;
+    document.getElementById('btnViewReply').addEventListener('click', () => window.open(status.fileUrl, '_blank'));
+    document.getElementById('btnDeleteReply').addEventListener('click', deleteBatchReply);
+  } else {
+    card.innerHTML = `
+      <div class="reply-status-card pending">
+        <span class="reply-status-icon">⏳</span>
+        <div class="reply-status-text">
+          <div class="reply-status-title">Chưa tải lên văn bản trả lời</div>
+          <div class="reply-status-sub">Cử tri đang thấy: "Đang chờ trả lời của cơ quan chức năng"</div>
+        </div>
+      </div>`;
+  }
+}
+
+async function deleteBatchReply() {
+  const ok = await showConfirm({
+    title: 'Xoá văn bản trả lời?',
+    msg: 'Cử tri sẽ lại thấy trạng thái "Đang chờ trả lời của cơ quan chức năng".',
+    icon: '🗑️', okLabel: 'Xoá tệp'
+  });
+  if (!ok) return;
+  try {
+    const r = await apiPost({ action: 'deleteBatchReply' }, true);
+    if (r.success) {
+      toast('Đã xoá văn bản trả lời!');
+      loadReplyStatus();
+    } else toast('Lỗi: ' + (r.error || ''), true);
+  } catch(e) { toast('Lỗi kết nối', true); }
+}
+
+const batchReplyUploadZone  = document.getElementById('batchReplyUploadZone');
+const batchReplyFileInput   = document.getElementById('batchReplyFileInput');
+
+batchReplyUploadZone.addEventListener('dragover', e => { e.preventDefault(); batchReplyUploadZone.classList.add('dragover'); });
+batchReplyUploadZone.addEventListener('dragleave', () => batchReplyUploadZone.classList.remove('dragover'));
+batchReplyUploadZone.addEventListener('drop', e => {
+  e.preventDefault(); batchReplyUploadZone.classList.remove('dragover');
+  if (e.dataTransfer.files && e.dataTransfer.files[0]) uploadBatchReply(e.dataTransfer.files[0]);
+});
+batchReplyFileInput.addEventListener('change', () => {
+  if (batchReplyFileInput.files && batchReplyFileInput.files[0]) uploadBatchReply(batchReplyFileInput.files[0]);
+  batchReplyFileInput.value = '';
+});
+
+function showBatchReplyProgress(show) {
+  document.getElementById('batchReplyProgress').style.display = show ? 'block' : 'none';
+  document.getElementById('batchReplyProgressBar').style.width = show ? '30%' : '0%';
+}
+
+async function uploadBatchReply(file) {
+  const okExt = /\.(pdf|doc|docx)$/i.test(file.name);
+  if (!okExt) { toast('⚠ Chỉ chấp nhận tệp .pdf, .doc, .docx', true); return; }
+
+  showBatchReplyProgress(true);
+  try {
+    const b64 = await fileToBase64(file);
+    document.getElementById('batchReplyProgressBar').style.width = '75%';
+    const r = await apiPost({
+      action: 'uploadBatchReply',
+      fileName: file.name,
+      mimeType: file.type || 'application/octet-stream',
+      base64Data: b64
+    }, true);
+    if (r.success) {
+      document.getElementById('batchReplyProgressBar').style.width = '100%';
+      toast('✅ Đã tải lên văn bản trả lời!');
+      renderReplyStatus(r);
+    } else {
+      toast('Lỗi: ' + (r.error || ''), true);
+    }
+  } catch (e) {
+    toast('Lỗi kết nối / đọc tệp', true);
+  } finally {
+    setTimeout(() => showBatchReplyProgress(false), 700);
+  }
+}
+
+// ============================================================
+//  KHOÁ FORM NHẬP Ý KIẾN
+// ============================================================
+function toLocalInputValue(isoStr) {
+  try {
+    const d = new Date(isoStr);
+    if (isNaN(d.getTime())) return '';
+    const pad = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  } catch { return ''; }
+}
+
+async function loadFormLockStatus() {
+  const card = document.getElementById('formLockStatusCard');
+  card.innerHTML = `<div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Đang tải…</div>`;
+  try {
+    const res = await fetch(API_URL + '?action=getFormLockStatus&t=' + Date.now());
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error || 'Lỗi server');
+    renderFormLockStatus(json);
+    document.getElementById('lockEnabledToggle').checked = !!json.enabled;
+    document.getElementById('lockFromInput').value = json.lockFrom ? toLocalInputValue(json.lockFrom) : '';
+  } catch (e) {
+    card.innerHTML = `<div class="reply-status-card pending"><span class="reply-status-icon">⚠️</span><div class="reply-status-text"><div class="reply-status-title">Không tải được trạng thái khoá form</div><div class="reply-status-sub">${escH(e.message)}</div></div></div>`;
+  }
+}
+
+function renderFormLockStatus(cfg) {
+  const card = document.getElementById('formLockStatusCard');
+  if (cfg.locked) {
+    card.innerHTML = `
+      <div class="reply-status-card pending">
+        <span class="reply-status-icon">🔒</span>
+        <div class="reply-status-text">
+          <div class="reply-status-title">Form đang TẠM KHOÁ</div>
+          <div class="reply-status-sub">${cfg.lockFrom ? 'Khoá từ: ' + fmtDate(cfg.lockFrom) : 'Đã khoá ngay lập tức'}</div>
+        </div>
+      </div>`;
+  } else if (cfg.enabled && cfg.lockFrom) {
+    card.innerHTML = `
+      <div class="reply-status-card done">
+        <span class="reply-status-icon">⏰</span>
+        <div class="reply-status-text">
+          <div class="reply-status-title">Form đang MỞ — đã hẹn lịch khoá</div>
+          <div class="reply-status-sub">Sẽ tự khoá lúc: ${fmtDate(cfg.lockFrom)}</div>
+        </div>
+      </div>`;
+  } else {
+    card.innerHTML = `
+      <div class="reply-status-card done">
+        <span class="reply-status-icon">🔓</span>
+        <div class="reply-status-text">
+          <div class="reply-status-title">Form đang MỞ bình thường</div>
+          <div class="reply-status-sub">Cử tri có thể gửi ý kiến</div>
+        </div>
+      </div>`;
+  }
+}
+
+document.getElementById('btnSaveFormLock').addEventListener('click', async () => {
+  const enabled = document.getElementById('lockEnabledToggle').checked;
+  const lockFromLocal = document.getElementById('lockFromInput').value;
+  let lockFromIso = '';
+  if (lockFromLocal) {
+    const d = new Date(lockFromLocal);
+    if (isNaN(d.getTime())) { toast('⚠ Thời điểm "Tạm khoá từ" không hợp lệ', true); return; }
+    lockFromIso = d.toISOString();
+  }
+
+  if (enabled && !lockFromLocal) {
+    const ok = await showConfirm({
+      title: 'Khoá form ngay lập tức?',
+      msg: 'Bạn chưa chọn thời điểm "Tạm khoá từ" nên form sẽ bị khoá <b>NGAY</b> khi lưu. Tiếp tục?',
+      icon: '🔒', okLabel: 'Khoá ngay'
+    });
+    if (!ok) return;
+  }
+
+  const btn = document.getElementById('btnSaveFormLock');
+  const oldHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang lưu…';
+  try {
+    const r = await apiPost({ action: 'setFormLock', enabled, lockFrom: lockFromIso }, true);
+    if (r.success) {
+      toast(enabled ? '✅ Đã lưu cài đặt khoá form' : '✅ Đã mở lại form nhập cho cử tri');
+      renderFormLockStatus(r);
+    } else {
+      toast('Lỗi: ' + (r.error || ''), true);
+    }
+  } catch (e) {
+    toast('Lỗi kết nối', true);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = oldHtml;
+  }
+});
+
+// ============================================================
+//  XUẤT TẤT CẢ Ý KIẾN RA FILE WORD (.docx)
+// ============================================================
+async function exportAllToDocx() {
+  if (typeof docx === 'undefined') {
+    toast('⚠ Không tải được thư viện xuất Word. Kiểm tra kết nối mạng và thử lại.', true);
+    return;
+  }
+  if (!allData || !allData.length) {
+    toast('⚠ Không có ý kiến nào để xuất', true);
+    return;
+  }
+
+  const btn = document.getElementById('btnExportAll');
+  const oldHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xuất…';
+
+  try {
+    const { Document, Packer, Paragraph, TextRun, AlignmentType, BorderStyle } = docx;
+
+    const sorted = [...allData].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    const children = [];
+
+    children.push(new Paragraph({
+      alignment: AlignmentType.CENTER,
+      spacing: { after: 60 },
+      children: [ new TextRun({ text: 'DANH SÁCH Ý KIẾN CỬ TRI', bold: true, size: 32, color: '0F766E' }) ]
+    }));
+    children.push(new Paragraph({
+      alignment: AlignmentType.CENTER,
+      spacing: { after: 60 },
+      children: [ new TextRun({ text: 'UBMT/TQVN Phường Thanh Khê', size: 22, color: '2F6B63' }) ]
+    }));
+    children.push(new Paragraph({
+      alignment: AlignmentType.CENTER,
+      spacing: { after: 320 },
+      children: [ new TextRun({
+        text: `Xuất lúc: ${new Date().toLocaleString('vi-VN')}  —  Tổng số: ${sorted.length} ý kiến`,
+        italics: true, size: 19, color: '888888'
+      }) ]
+    }));
+
+    const fieldLine = (label, value, opts = {}) => new Paragraph({
+      spacing: { after: 60 },
+      children: [
+        new TextRun({ text: `${label}: `, bold: true, size: 20 }),
+        new TextRun({ text: value ? String(value) : '(Không có)', size: 20, ...opts })
+      ]
+    });
+
+    sorted.forEach((item, idx) => {
+      children.push(new Paragraph({
+        spacing: { before: idx === 0 ? 0 : 260, after: 100 },
+        children: [ new TextRun({ text: `${idx + 1}. ${item.hoTen || '(Không rõ tên)'}`, bold: true, size: 26, color: '0F766E' }) ]
+      }));
+
+      children.push(fieldLine('Địa chỉ / SĐT', item.diaChi));
+      children.push(fieldLine('Ngày gửi', fmtDate(item.timestamp)));
+
+      children.push(new Paragraph({
+        spacing: { before: 60, after: 40 },
+        children: [ new TextRun({ text: 'Nội dung ý kiến:', bold: true, size: 20 }) ]
+      }));
+      children.push(new Paragraph({
+        spacing: { after: 100 },
+        children: [ new TextRun({ text: item.noiDung || '(Không có nội dung)', size: 20 }) ]
+      }));
+
+      if (item.attachUrl) {
+        children.push(new Paragraph({
+          spacing: { after: 80 },
+          children: [ new TextRun({ text: 'Tệp đính kèm: ' + item.attachUrl.split('\n').join(', '), size: 18, color: '0EA5E9' }) ]
+        }));
+      }
+      if (item.txtUrl) {
+        children.push(new Paragraph({
+          spacing: { after: 80 },
+          children: [ new TextRun({ text: 'Link tệp ý kiến: ' + item.txtUrl, size: 18, color: '0EA5E9' }) ]
+        }));
+      }
+
+      children.push(new Paragraph({
+        spacing: { after: 200 },
+        border: { bottom: { color: 'CCCCCC', space: 4, style: BorderStyle.SINGLE, size: 6 } },
+        children: [ new TextRun({ text: '' }) ]
+      }));
+    });
+
+    const doc = new Document({ sections: [{ properties: {}, children }] });
+
+    const blob = await Packer.toBlob(doc);
+    const url = URL.createObjectURL(blob);
+    const dateStr = new Date().toISOString().slice(0, 10);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Y-kien-cu-tri_${dateStr}.docx`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+
+    toast(`✅ Đã xuất ${sorted.length} ý kiến ra file Word!`);
+  } catch (e) {
+    console.error('Export docx error:', e);
+    toast('Lỗi khi xuất file: ' + e.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = oldHtml;
+  }
+}
+
+document.getElementById('btnExportAll').addEventListener('click', exportAllToDocx);
+
+// ============================================================
+//  AUTO REFRESH
+// ============================================================
+let isUploadingBatchReply = false;
+
+setInterval(() => {
+  const panelVisible = document.getElementById('adminPanel').classList.contains('show');
+  const modalOpen = document.getElementById('modal').classList.contains('show');
+  if (panelVisible && !modalOpen && !isUploadingBatchReply) {
+    loadList(true);
+    loadReplyStatus(true);
+  }
+}, 60000);
+</script>
+</body>
+</html>
